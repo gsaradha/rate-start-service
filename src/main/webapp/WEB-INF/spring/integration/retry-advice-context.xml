@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="retryAdvice" class="org.springframework.integration.handler.advice.RequestHandlerRetryAdvice" >
+        <property name="retryTemplate">
+            <bean class="org.springframework.retry.support.RetryTemplate">
+                <property name="backOffPolicy">
+                    <bean class="org.springframework.retry.backoff.ExponentialBackOffPolicy">
+                        <property name="initialInterval" value="${retry.initialInterval}"/>
+                        <property name="maxInterval" value="${retry.maxInterval}"/>
+                        <property name="multiplier" value="${retry.multiplier}"/>
+                    </bean>
+                </property>
+
+                <property name="retryPolicy">
+                    <bean class="com.ratestart.integrator.integration.retry.CustomRetryPolicy">
+                        <constructor-arg name="maxAttempts" value="${retry.maxAttempts}" />
+                        <constructor-arg name="retryableExceptions" ref="retryableExceptions" />
+                    </bean>
+                </property>
+            </bean>
+        </property>
+
+        <property name="recoveryCallback">
+            <bean class="org.springframework.integration.handler.advice.ErrorMessageSendingRecoverer">
+                <constructor-arg ref="errorChannel" />
+            </bean>
+        </property>
+    </bean>
+
+    <util:map id="retryableExceptions" map-class="java.util.HashMap" >
+        <entry key="java.net.SocketException" value="true" />
+    </util:map>
+
+</beans>

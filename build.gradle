@@ -1,0 +1,159 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+group = 'com.ratestart.integrator'
+
+// Version is picked up from environment variable
+//version = "0.0.1-SNAPSHOT"
+
+ext {
+    cukes = [version: '1.1.7']
+    spring = [version    : '4.1.6.RELEASE',
+              integration: [version: '4.1.3.RELEASE'],
+              data       : [version: '1.6.2.RELEASE'],
+              retry      : [version: '1.1.3.RELEASE']]
+    spock = [version: '1.0-groovy-2.4']
+    groovy = [version: '2.4.11']
+    tomcat = [home: '/opt/tomcat']
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs('src/main/groovy')
+        }
+        resources {
+            srcDirs = ['src/main/webapp']
+        }
+    }
+    test {
+        groovy {
+            srcDirs('src/test/groovy')
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+
+    integrationTest {
+        groovy {
+            srcDirs('src/test/groovy')
+        }
+        resources {
+            srcDirs = ['src/test/resources','database']
+        }
+    }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+compileJava{
+    options.compilerArgs << '-parameters'
+}
+
+
+test {
+    include "**/*Test.*"
+    exclude "**/*IntegrationTest.*"
+}
+
+configurations{
+    all*.exclude group: 'org.eclipse.persistence'
+    all*.exclude group: 'org.apache.activemq'
+}
+
+dependencies {
+
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+    testCompile "org.springframework.integration:spring-integration-test:${spring.integration.version}"
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
+    testCompile "junit:junit:4.11"
+    testCompile "org.spockframework:spock-core:${spock.version}"
+    testCompile "org.spockframework:spock-spring:${spock.version}"
+    testCompile "org.objenesis:objenesis:2.1"
+    testCompile "cglib:cglib-nodep:3.1"
+
+    //validation
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.4.Final'
+    compile group: 'javax.el', name: 'javax.el-api', version: '3.0.0'
+    compile group: 'org.glassfish.web', name: 'javax.el', version: '2.2.6'
+
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+
+    compile 'com.h2database:h2:1.4.192'
+    compile "org.codehaus.groovy:groovy-all:${groovy.version}"
+
+    compile "org.springframework:spring-test:${spring.version}"
+    compile "org.springframework:spring-webmvc:${spring.version}"
+    compile "org.springframework:spring-jdbc:${spring.version}"
+    compile 'org.springframework.data:spring-data-jpa:1.3.0.RELEASE'
+    compile 'c3p0:c3p0:0.9.1.2'
+    compile 'org.hibernate:hibernate-c3p0:3.3.1.GA'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+    compile 'org.hibernate:hibernate-entitymanager:4.3.4.Final'
+
+    compile group: 'org.springframework.retry', name: 'spring-retry', version: spring.retry
+    compile "org.springframework.integration:spring-integration-core:${spring.integration.version}"
+    compile "org.springframework.integration:spring-integration-http:${spring.integration.version}"
+    compile "org.springframework.integration:spring-integration-jdbc:${spring.integration.version}"
+    compile "org.springframework.integration:spring-integration-groovy:${spring.integration.version}"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.5'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.5'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
+    compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.13'
+
+    compile 'log4j:log4j:1.2.17'
+    compile 'org.slf4j:slf4j-log4j12:1.7.7'
+    compile 'mysql:mysql-connector-java:5.1.31'
+
+    compile "commons-fileupload:commons-fileupload:1.3.2"
+    compile "commons-io:commons-io:2.2"
+    compile 'org.apache.httpcomponents:httpclient:4.3.5'
+    compile "commons-collections:commons-collections:3.2.1"
+	compile "commons-validator:commons-validator:1.5.1"
+	compile "org.apache.commons:commons-lang3:3.0"
+
+    compile "com.googlecode.libphonenumber:libphonenumber:7.0.2"
+    compile "joda-time:joda-time:2.2"
+    compile 'com.newrelic.agent.java:newrelic-api:3.13.0'
+    compile 'org.json:json:20141113'
+
+    compile 'javax.validation:validation-api:1.1.0.Final'
+    compile "org.springframework.integration:spring-integration-mail:${spring.integration.version}"
+    compile "com.sun.mail:javax.mail:1.5.4"
+
+}
+
+task copyToTomcat(dependsOn: war, type: Copy){
+    from 'build/libs'
+    into "${tomcat.home}/webapps"
+}
+
+task copyResources(dependsOn: war, type: Copy){
+    from 'src/test/resources'
+    into "${tomcat.home}/lib"
+}
+
+task runTomcat(dependsOn: [copyToTomcat, copyResources], type: Exec) {
+    workingDir "${tomcat.home}/bin"
+    commandLine './startup.sh'
+}
+
+task stopTomcat(type: Exec) {
+    workingDir "${tomcat.home}/bin"
+    commandLine './shutdown.sh'
+}
+
