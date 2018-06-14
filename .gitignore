@@ -1,4 +1,7 @@
+build.gradle.gradle
 .DS_Store
 .class
 build/
+.idea/
+.jar
 
