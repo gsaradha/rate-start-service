@@ -60,13 +60,6 @@ class RateStartController {
         autoEquityList.isPresent() ? autoEquityList.get() : null
     }
 
-    @RequestMapping(value = "/lender/username/{username}/password/{password}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    List<Lender> getLender(@PathVariable("username") String username, @PathVariable("password") String password) throws Exception {
-        Optional<List<Lender>> lenderList = rateStartService.getLender(username,password)
-        lenderList.isPresent() ? lenderList.get() : null
-    }
     @RequestMapping(value = "/lenderStudentLoan/studentLoanType/{studentLoanType}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -74,4 +67,13 @@ class RateStartController {
         Optional<List<LenderStudentLoan>> studentLoanList = rateStartService.getLenderStudentLoan(studentLoanType)
         studentLoanList.isPresent() ? studentLoanList.get() : null
     }
+
+    @RequestMapping(value = "/lender/username/{username}/password/{password}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    List<Lender> getLender(@PathVariable("username") String username, @PathVariable("password") String password) throws Exception {
+        Optional<List<Lender>> lenderList = rateStartService.getLender(username,password)
+        lenderList.isPresent() ? lenderList.get() : null
+    }
+
 }

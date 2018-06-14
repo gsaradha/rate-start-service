@@ -42,8 +42,6 @@ class RateStartService {
     @Autowired
     LenderEquityRepository lenderRepository
 
-
-
     @Autowired
     AutoEquityRepository autoEquityRepository
 
@@ -208,20 +206,19 @@ class RateStartService {
         lenderEquityList
     }
 
-    Optional<List<LenderStudentLoan>> getLenderStudentLoan(Long studentLoanType) {
-        List<StudentLoan> studentLoanList = studentLoanRepository.fetchStudentLoan(studentLoanType)
-        List<LenderStudentLoan> lenderStudentLoan = equityToStudentLoan(studentLoanList)
+    Optional<List<LenderStudentLoan>> getLenderStudentLoan(Long loanTypeId) {
+        List<StudentLoan> studentLoanList = studentLoanRepository.fetchStudentLoan(loanTypeId)
+        List<LenderStudentLoan> lenderStudentLoan = convertToLenderStudentLoan(studentLoanList)
         Optional.ofNullable(lenderStudentLoan)
     }
 
-    List<LenderStudentLoan> equityToStudentLoan(List<StudentLoan> studentLoanList) {
+    List<LenderStudentLoan> convertToLenderStudentLoan(List<StudentLoan> studentLoanList) {
         List<LenderStudentLoan> lenderStudentLoanList = []
         studentLoanList.forEach{it ->
             lenderStudentLoanList.add(
                     new LenderStudentLoan(
                             idStudentLoan: it.idStudentLoan,
                             lenderId:it.lenderId,
-                            //studentLoanType: it.studentLoanType,
                             conditions: it.conditions,
                             studentLoanCol:it.studentLoanCol,
                             apr:it.apr,

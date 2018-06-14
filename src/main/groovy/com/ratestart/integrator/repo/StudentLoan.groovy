@@ -1,12 +1,9 @@
 package com.ratestart.integrator.repo
 
-import com.ratestart.integrator.domain.LoanOption
-import com.ratestart.integrator.domain.LoanOptionConverter
 import com.ratestart.integrator.domain.LoanType
 import com.ratestart.integrator.domain.LoanTypeConverter
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
-
 import javax.persistence.*
 
 @Entity
@@ -38,7 +35,6 @@ class StudentLoan implements Serializable {
     @Column(name = "student_loan_col")
     String studentLoanCol
 
-
     @Basic(optional = false)
     @Column(name = "apr")
     BigDecimal apr
@@ -56,8 +52,7 @@ class StudentLoan implements Serializable {
     String logoFileName
 
     @Basic(optional = false)
-    @Column(name = "studentloandesc")
+    @Column(name = "StudentLoanDesc")
     String studentLoanDesc
-
 
 }
