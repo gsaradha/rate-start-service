@@ -9,6 +9,8 @@
         <class>com.ratestart.integrator.repo.Lender</class>
         <class>com.ratestart.integrator.repo.AutoEquity</class>
         <class>com.ratestart.integrator.repo.StudentLoan</class>
+        <class>com.ratestart.integrator.repo.CreditCard</class>
+        <class>com.ratestart.integrator.repo.CategoryTips</class>
     </persistence-unit>
 
 </persistence>

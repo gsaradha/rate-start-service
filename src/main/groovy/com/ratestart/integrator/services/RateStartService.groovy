@@ -4,14 +4,17 @@ import com.newrelic.api.agent.NewRelic
 import com.newrelic.api.agent.Trace
 import com.ratestart.integrator.model.AdPixel
 import com.ratestart.integrator.model.AdPixelResponse
-import com.ratestart.integrator.model.Lender
+import com.ratestart.integrator.model.Category
 import com.ratestart.integrator.model.LenderAutoEquity
+import com.ratestart.integrator.model.LenderCreditCard
 import com.ratestart.integrator.model.LenderHomeEquity
 import com.ratestart.integrator.model.LenderMortgage
 import com.ratestart.integrator.model.LenderStudentLoan
 import com.ratestart.integrator.model.PlatformProperty
 import com.ratestart.integrator.repo.AutoEquity
 import com.ratestart.integrator.repo.AutoEquityRepository
+import com.ratestart.integrator.repo.CreditCard
+import com.ratestart.integrator.repo.CreditCardRepository
 import com.ratestart.integrator.repo.HomeEquity
 import com.ratestart.integrator.repo.HomeEquityRepository
 import com.ratestart.integrator.repo.Lender
@@ -20,6 +23,8 @@ import com.ratestart.integrator.repo.Mortgage
 import com.ratestart.integrator.repo.MortgageRepository
 import com.ratestart.integrator.repo.StudentLoan
 import com.ratestart.integrator.repo.StudentLoanRepository
+import com.ratestart.integrator.repo.CategoryTips
+import com.ratestart.integrator.repo.CategoryRepository
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.ParameterizedTypeReference
@@ -47,6 +52,12 @@ class RateStartService {
 
     @Autowired
     StudentLoanRepository studentLoanRepository
+
+    @Autowired
+    CreditCardRepository creditCardRepository
+
+    @Autowired
+    CategoryRepository tipsRepository
 
     @Trace(dispatcher = true)
     Optional<AdPixel> create(String accountId, String accessToken, AdPixel adPixel) {
@@ -181,11 +192,65 @@ class RateStartService {
     }
 
 
+    Optional<List<LenderCreditCard>> getLenderCreditCard(Long cardTypeId) {
+        List<CreditCard> creditCardList = creditCardRepository.fetchCreditCard(cardTypeId)
+        List<LenderCreditCard> lenderCreditCardList = equityToCreditCard(creditCardList)
+        Optional.ofNullable(lenderCreditCardList)
+    }
+
+    List<LenderCreditCard> equityToCreditCard(List<CreditCard> creditCardList) {
+        List<LenderCreditCard> lenderCreditCards = []
+        creditCardList.forEach{it ->
+            lenderCreditCards.add(
+                    new LenderCreditCard(
+                            idCreditCard: it.idCreditCard,
+                            lenderId: it.lenderId,
+                            purchase: it.purchase,
+                            balance: it.balance,
+                            cashAdvance: it.cashAdvance,
+                            introApr: it.introApr,
+                            date:it.date,
+                            conditions:it.conditions,
+                            stateLicense: it.stateLicense,
+                            cardType: it.cardType,
+                            logoFileName: it.logoFilename
+                    )
+            )
+        }
+        lenderCreditCards
+    }
+
+    Optional<Category> getCategoryTips(Integer idCategory) {
+        List<CategoryTips> categoryTips = tipsRepository.fetchCategoryTips(idCategory)
+        Category category = convertToCategoryTips(categoryTips)
+        Optional.ofNullable(category)
+    }
+
+    Category convertToCategoryTips(List<CategoryTips> categoryTips) {
+        Category category = new Category()
+        categoryTips.forEach{it ->
+            category.categoryId = it.categoryId
+            category.categoryName = it.description
+            category.categoryImage = it.fileName
+            category.icon = it.iconName
+            Category.Tip tip = new Category.Tip()
+            tip.id = it.idTips
+            tip.text = it.tip
+            category.tips.add(tip)
+        }
+        category
+    }
+
+
+
+
     Optional<List<Lender>> getLender(String username,String password) {
         List<Lender> lenderEquityList = lenderRepository.fetchLender(username,password)
         List<Lender> lender = lenderDetails(lenderEquityList)
         Optional.ofNullable(lender)
     }
+
+
 
     List<Lender> lenderDetails(List<Lender> lenderList) {
         List<Lender> lenderEquityList = []
@@ -199,7 +264,7 @@ class RateStartService {
                             nmlsId: it.nmlsId,
                             stateLicense: it.stateLicense,
                             phone: it.phone,
-                            logoFileName: it.logoFileName
+                            logoFileName: it.logoFilename
                     )
             )
         }

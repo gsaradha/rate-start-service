@@ -3,10 +3,11 @@ package com.ratestart.integrator.controllers
 import com.newrelic.api.agent.Trace
 import com.ratestart.integrator.model.Lender
 import com.ratestart.integrator.model.LenderAutoEquity
+import com.ratestart.integrator.model.LenderCreditCard
 import com.ratestart.integrator.model.LenderHomeEquity
 import com.ratestart.integrator.model.LenderMortgage
 import com.ratestart.integrator.model.LenderStudentLoan
-import com.ratestart.integrator.repo.StudentLoan
+import com.ratestart.integrator.model.Category
 import com.ratestart.integrator.services.RateStartService
 import groovy.util.logging.Log4j
 import org.springframework.beans.factory.annotation.Autowired
@@ -68,7 +69,23 @@ class RateStartController {
         studentLoanList.isPresent() ? studentLoanList.get() : null
     }
 
-    @RequestMapping(value = "/lender/username/{username}/password/{password}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/lenderCreditCard/creditCardType/{cardTypeId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    List<LenderCreditCard> getLenderCreditCard(@PathVariable("cardTypeId") Long cardTypeId) throws Exception {
+        Optional<List<LenderCreditCard>> creditCardList = rateStartService.getLenderCreditCard(cardTypeId)
+        creditCardList.isPresent() ? creditCardList.get() : null
+    }
+
+    @RequestMapping(value = "/category/categoryId/{categoryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    Category getCategory(@PathVariable("categoryId") Integer categoryId) throws Exception {
+        Optional<Category> categoryOptional = rateStartService.getCategoryTips(categoryId)
+        categoryOptional.get()
+    }
+
+    @RequestMapping(value = "/lender/signup", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     List<Lender> getLender(@PathVariable("username") String username, @PathVariable("password") String password) throws Exception {
