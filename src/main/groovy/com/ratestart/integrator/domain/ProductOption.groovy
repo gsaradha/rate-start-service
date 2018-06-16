@@ -17,4 +17,9 @@ enum ProductOption {
         !type? UNKNOWN : type
     }
 
+    static ProductOption getProductOption(String name){
+        ProductOption type =  values().find {it.name() == name}
+        !type? UNKNOWN : type
+    }
+
 }

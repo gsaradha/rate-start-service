@@ -39,7 +39,6 @@ class HomeEquity implements Serializable {
     @Column(name = "credit_range")
     String credit
 
-
     @Basic(optional = false)
     @Column(name = "amount")
     BigDecimal amount

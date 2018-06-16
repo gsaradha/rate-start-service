@@ -1,11 +1,8 @@
 package com.ratestart.integrator.services
 
-import com.newrelic.api.agent.NewRelic
-import com.newrelic.api.agent.Trace
 import com.ratestart.integrator.domain.LoanOption
 import com.ratestart.integrator.domain.LoanType
-import com.ratestart.integrator.model.AdPixel
-import com.ratestart.integrator.model.AdPixelResponse
+import com.ratestart.integrator.domain.ProductOption
 import com.ratestart.integrator.model.Category
 import com.ratestart.integrator.model.Error
 import com.ratestart.integrator.model.LenderAutoEquity
@@ -14,7 +11,6 @@ import com.ratestart.integrator.model.LenderHomeEquity
 import com.ratestart.integrator.model.LenderInfo
 import com.ratestart.integrator.model.LenderMortgage
 import com.ratestart.integrator.model.LenderStudentLoan
-import com.ratestart.integrator.model.MortgageInfo
 import com.ratestart.integrator.model.PlatformProperty
 import com.ratestart.integrator.repo.AutoEquity
 import com.ratestart.integrator.repo.AutoEquityRepository
@@ -32,8 +28,6 @@ import com.ratestart.integrator.repo.CategoryTips
 import com.ratestart.integrator.repo.CategoryRepository
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.core.ParameterizedTypeReference
-import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 
 @Slf4j
@@ -64,14 +58,37 @@ class RateStartService {
     @Autowired
     CategoryRepository tipsRepository
 
+    Optional<Object> createLenderAutoEquity(LenderAutoEquity lenderAutoEquity) {
+
+        Objects.requireNonNull(lenderAutoEquity, "LenderAutoEquity is null!")
+        AutoEquity autoEquity = convertLenderAutoEquityToAutoEquity(lenderAutoEquity)
+        autoEquity = autoEquityRepository.save(autoEquity)
+        lenderAutoEquity.idAuto = autoEquity.idAuto
+        Optional.of(lenderAutoEquity)
+    }
+
+    AutoEquity convertLenderAutoEquityToAutoEquity(LenderAutoEquity lenderAutoEquity) {
+        new AutoEquity(
+                rate:lenderAutoEquity.rate,
+                apr:lenderAutoEquity.apr,
+                credit:lenderAutoEquity.credit,
+                creditRange: lenderAutoEquity.creditRange,
+                conditions: lenderAutoEquity.conditions,
+                date: lenderAutoEquity.date,
+                logoFileName: lenderAutoEquity.logoFileName,
+                idLender: lenderAutoEquity.lenderId,
+                loanOption: LoanOption.getLoanOption(lenderAutoEquity.loanOption),
+                productCondition: ProductOption.getProductOption(lenderAutoEquity.productCondition)
+        )
+    }
 
     Optional<Object> createLenderHomeEquity(LenderHomeEquity lenderHomeEquity) {
 
         Objects.requireNonNull(lenderHomeEquity, "LenderHomeEquity is null!")
         HomeEquity homeEquity = convertLenderHomeEquityToHomeEquity(lenderHomeEquity)
         homeEquity = homeEquityRepository.save(homeEquity)
-        homeEquity.idHomeEquity = homeEquity.idHomeEquity
-        Optional.of(homeEquity)
+        lenderHomeEquity.idHomeEquity = homeEquity.idHomeEquity
+        Optional.of(lenderHomeEquity)
     }
 
     HomeEquity convertLenderHomeEquityToHomeEquity(LenderHomeEquity lenderHomeEquity) {
@@ -118,9 +135,6 @@ class RateStartService {
                  logoFileName: lenderMortgage.logoFileName)
     }
 
-
-
-
     Optional<Object> loginLender(LenderInfo lenderInfo) {
 
         Objects.requireNonNull(lenderInfo, "LenderInfo is null!")
@@ -134,8 +148,6 @@ class RateStartService {
             convertLenderToLenderInfo(lender)
         }
     }
-
-
 
     Lender convertLenderInfoToLender(LenderInfo lenderInfo) {
         new Lender(
@@ -251,7 +263,6 @@ class RateStartService {
         lenderAutoEquities
     }
 
-
     Optional<List<LenderCreditCard>> getLenderCreditCard(Long cardTypeId) {
         List<CreditCard> creditCardList = creditCardRepository.fetchCreditCard(cardTypeId)
         List<LenderCreditCard> lenderCreditCardList = equityToCreditCard(creditCardList)
@@ -301,16 +312,11 @@ class RateStartService {
         category
     }
 
-
-
-
     Optional<List<Lender>> getLender(String username,String password) {
         List<Lender> lenderEquityList = lenderRepository.fetchLender(username,password)
         List<Lender> lender = lenderDetails(lenderEquityList)
         Optional.ofNullable(lender)
     }
-
-
 
     List<Lender> lenderDetails(List<Lender> lenderList) {
         List<Lender> lenderEquityList = []
@@ -357,41 +363,4 @@ class RateStartService {
         lenderStudentLoanList
     }
 
-
-
-    @Trace(dispatcher = true)
-    Optional<AdPixelResponse> getById(String adPixelId, String accessToken) {
-
-        NewRelic.incrementCounter("Custom/Service/AdPixel/getById/initiated")
-
-        Objects.requireNonNull(adPixelId, "adPixelId may not be null!")
-
-        def endPointUrl = enrichApiUrlForGetById(adPixelId, accessToken)
-
-        log.info("fetch AdPixel information for adPixelId ${adPixelId}")
-        AdPixel adPixel = (AdPixel)apiCaller.call(
-                endPointUrl,
-                new ParameterizedTypeReference<AdPixel>() {},
-                HttpMethod.GET)
-
-        NewRelic.incrementCounter("Custom/Service/AdPixel/getById/succeeded")
-        Optional.ofNullable(new AdPixelResponse(data: [adPixel]))
-    }
-
-
-    def enrichApiUrlForGet(String accountId, String accessToken) {
-        platformProperty.apiUrl + "/act_" + accountId + "/adspixels?access_token=" + accessToken + "&fields=id,name,code"
-    }
-
-    def enrichApiUrlForCreate(String accountId, String accessToken) {
-        platformProperty.apiUrl + "/act_" + accountId + "/adspixels?access_token=" + accessToken
-    }
-
-    def enrichApiUrlForUpdate(String adPixelId, String accessToken) {
-        platformProperty.apiUrl + "/" + adPixelId + "?access_token=" + accessToken
-    }
-
-    def enrichApiUrlForGetById(String adPixelId, String accessToken) {
-        platformProperty.apiUrl + "/" + adPixelId + "?access_token=" + accessToken + "&fields=id,name,code"
-    }
 }

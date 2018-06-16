@@ -50,6 +50,19 @@ class RateStartController {
         hEquity
     }
 
+    @RequestMapping(value = "/lender/autoEquity", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    Object createLenderAutoEquity(@Valid @RequestBody LenderAutoEquity lenderAutoEquity, BindingResult bindingResult) throws Exception {
+        log.info("LenderAutoEquity Received")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid LenderAutoEquity encountered - ${bindingResult}")
+        }
+        Optional<Object> lenderAutoEquityOptional = rateStartService.createLenderAutoEquity(lenderAutoEquity)
+        Object aEquity = lenderAutoEquityOptional.get()
+        log.info("Fetched LenderAutoEquity: ${aEquity}")
+        aEquity
+    }
+
     @RequestMapping(value = "/lender/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     Object loginLender(@Valid @RequestBody LenderInfo lender, BindingResult bindingResult) throws Exception {

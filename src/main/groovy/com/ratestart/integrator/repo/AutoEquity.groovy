@@ -24,13 +24,21 @@ class AutoEquity implements Serializable {
     Long idAuto
 
     @Basic(optional = false)
+    @Column(name = "Lender_idLender_FK")
+    Long idLender
+
+    @Basic(optional = false)
+    @Column(name = "LoanOption_idLoanOption_FK")
+    @Convert(converter = LoanOptionConverter)
+    LoanOption loanOption
+
+    @Basic(optional = false)
     @Column(name = "rate")
     BigDecimal rate
 
     @Basic(optional = false)
     @Column(name = "apr")
     BigDecimal apr
-
 
     @Basic(optional = false)
     @Column(name = "credit")
@@ -53,7 +61,8 @@ class AutoEquity implements Serializable {
     String logoFileName
 
     @Basic(optional = false)
-    @Column(name = "description")
-    String productCondition
+    @Column(name = "ProductCondition_idProductCondition_FK")
+    @Convert(converter = ProductOptionConverter)
+    ProductOption productCondition
 
 }

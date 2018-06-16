@@ -12,6 +12,7 @@ import groovy.transform.ToString
 class LenderAutoEquity {
     Long idAuto
     Long lenderId
+    String loanOption
     BigDecimal rate
     BigDecimal apr
     BigDecimal credit
