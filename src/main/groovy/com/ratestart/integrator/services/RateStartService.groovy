@@ -65,6 +65,34 @@ class RateStartService {
     CategoryRepository tipsRepository
 
 
+    Optional<Object> createLenderHomeEquity(LenderHomeEquity lenderHomeEquity) {
+
+        Objects.requireNonNull(lenderHomeEquity, "LenderHomeEquity is null!")
+        HomeEquity homeEquity = convertLenderHomeEquityToHomeEquity(lenderHomeEquity)
+        homeEquity = homeEquityRepository.save(homeEquity)
+        homeEquity.idHomeEquity = homeEquity.idHomeEquity
+        Optional.of(homeEquity)
+    }
+
+    HomeEquity convertLenderHomeEquityToHomeEquity(LenderHomeEquity lenderHomeEquity) {
+                    new HomeEquity(
+                            lenderId:lenderHomeEquity.lenderId,
+                            loanType: lenderHomeEquity.loanType,
+                            name: lenderHomeEquity.name,
+                            rate: lenderHomeEquity.rate,
+                            credit:lenderHomeEquity.credit,
+                            amount:lenderHomeEquity.amount,
+                            fees:lenderHomeEquity.fees,
+                            afterIntroRate:lenderHomeEquity.afterIntroRate,
+                            maxLtv:lenderHomeEquity.maxLtv,
+                            stateLicense:lenderHomeEquity.stateLicense,
+                            requiredDraw:lenderHomeEquity.requiredDraw,
+                            date: lenderHomeEquity.date,
+                            logoFilename: lenderHomeEquity.logoFileName,
+                            conditions: lenderHomeEquity.conditions
+                    )
+    }
+
     Optional<Object> createLenderMortgage(LenderMortgage lenderMortgage) {
 
         Objects.requireNonNull(lenderMortgage, "LenderMortgage is null!")

@@ -37,6 +37,19 @@ class RateStartController {
         lMortgage
     }
 
+    @RequestMapping(value = "/lender/homeEquity", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    Object createLenderHomeEquity(@Valid @RequestBody LenderHomeEquity lenderHomeEquity, BindingResult bindingResult) throws Exception {
+        log.info("LenderHomeEquity Received")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid LenderHomeEquity encountered - ${bindingResult}")
+        }
+        Optional<Object> lenderHomeEquityOptional = rateStartService.createLenderHomeEquity(lenderHomeEquity)
+        Object hEquity = lenderHomeEquityOptional.get()
+        log.info("Fetched LenderHomeEquity: ${hEquity}")
+        hEquity
+    }
+
     @RequestMapping(value = "/lender/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     Object loginLender(@Valid @RequestBody LenderInfo lender, BindingResult bindingResult) throws Exception {

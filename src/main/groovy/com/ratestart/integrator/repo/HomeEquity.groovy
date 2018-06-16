@@ -23,14 +23,10 @@ class HomeEquity implements Serializable {
     @Column(name = "Lender_idLender_FK")
     Long lenderId
 
-   /* @Basic(optional = false)
+    @Basic(optional = false)
     @Column(name = "LoanType_idLoanType_FK")
     @Convert(converter = LoanTypeConverter)
-    LoanType loanType*/
-
-    @Basic(optional = false)
-    @Column(name = "description")
-    String loanType
+    LoanType loanType
 
     @Column(name = "name")
     String name
