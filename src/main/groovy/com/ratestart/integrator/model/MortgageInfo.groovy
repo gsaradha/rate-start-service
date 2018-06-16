@@ -1,21 +1,18 @@
 package com.ratestart.integrator.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.ratestart.integrator.domain.LoanOption
-import com.ratestart.integrator.domain.LoanType
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
 @ToString(includeNames = true, includePackage = false)
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class LenderMortgage {
-
+class MortgageInfo {
     Long mortgageId
     String name
     Long lenderId
-    String loanType
-    String loanOption
+    Long loanType
+    Long loanOption
     BigDecimal fees
     Integer points
     BigDecimal apr
@@ -25,5 +22,6 @@ class LenderMortgage {
     String nmlsId
     String stateLicense
     String logoFileName
-
 }
+
+

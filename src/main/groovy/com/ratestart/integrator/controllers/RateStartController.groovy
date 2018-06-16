@@ -1,7 +1,7 @@
 package com.ratestart.integrator.controllers
 
-import com.newrelic.api.agent.Trace
-import com.ratestart.integrator.model.Lender
+import com.ratestart.integrator.model.Error
+import com.ratestart.integrator.model.LenderInfo
 import com.ratestart.integrator.model.LenderAutoEquity
 import com.ratestart.integrator.model.LenderCreditCard
 import com.ratestart.integrator.model.LenderHomeEquity
@@ -24,17 +24,41 @@ class RateStartController {
     @Autowired
     RateStartService rateStartService
 
-    @Trace
-    @RequestMapping(value = "/saveLender", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/lender/mortgage", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    void processLead(@Valid @RequestBody String classObject, BindingResult bindingResult) throws Exception {
-        log.info("Update Received, preparing to process lender of: ${classObject}")
+    Object createLenderMortgage(@Valid @RequestBody LenderMortgage lenderMortgage, BindingResult bindingResult) throws Exception {
+        log.info("LenderMortgage Received")
         if(bindingResult.hasErrors()) {
-            throw new Exception("Invalid Lender encountered - ${bindingResult}")
+            new Error(errorMessage: "Invalid LenderMortgage encountered - ${bindingResult}")
         }
+        Optional<Object> lenderMortgageOptional = rateStartService.createLenderMortgage(lenderMortgage)
+        Object lMortgage = lenderMortgageOptional.get()
+        log.info("Fetched LenderMortgage: ${lMortgage}")
+        lMortgage
+    }
 
-        //Call the Service method to process
-        log.info("Lead finished processing for web publisher campaign of: ${classObject}")
+    @RequestMapping(value = "/lender/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    Object loginLender(@Valid @RequestBody LenderInfo lender, BindingResult bindingResult) throws Exception {
+        log.info("Login Received")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid Lender encountered - ${bindingResult}")
+        }
+        Optional<Object> lenderInfo = rateStartService.loginLender(lender)
+        log.info("Fetched LenderInfo: ${lenderInfo.get()}")
+        lenderInfo.get()
+    }
+
+    @RequestMapping(value = "/lender/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    Object signUpLender(@Valid @RequestBody LenderInfo lender, BindingResult bindingResult) throws Exception {
+        log.info("SignUp Received, preparing to process lender")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid Lender encountered - ${bindingResult}")
+        }
+        Optional<Object> lenderInfo = rateStartService.signUpLender(lender)
+        log.info("Fetched LenderInfo: ${lenderInfo.get()}")
+        lenderInfo.get()
     }
 
     @RequestMapping(value = "/lenderMortgages/loanType/{loanTypeId}/loanOption/{loanOptionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -83,14 +107,6 @@ class RateStartController {
     Category getCategory(@PathVariable("categoryId") Integer categoryId) throws Exception {
         Optional<Category> categoryOptional = rateStartService.getCategoryTips(categoryId)
         categoryOptional.get()
-    }
-
-    @RequestMapping(value = "/lender/signup", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    List<Lender> getLender(@PathVariable("username") String username, @PathVariable("password") String password) throws Exception {
-        Optional<List<Lender>> lenderList = rateStartService.getLender(username,password)
-        lenderList.isPresent() ? lenderList.get() : null
     }
 
 }

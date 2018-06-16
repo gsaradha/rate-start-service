@@ -2,14 +2,19 @@ package com.ratestart.integrator.services
 
 import com.newrelic.api.agent.NewRelic
 import com.newrelic.api.agent.Trace
+import com.ratestart.integrator.domain.LoanOption
+import com.ratestart.integrator.domain.LoanType
 import com.ratestart.integrator.model.AdPixel
 import com.ratestart.integrator.model.AdPixelResponse
 import com.ratestart.integrator.model.Category
+import com.ratestart.integrator.model.Error
 import com.ratestart.integrator.model.LenderAutoEquity
 import com.ratestart.integrator.model.LenderCreditCard
 import com.ratestart.integrator.model.LenderHomeEquity
+import com.ratestart.integrator.model.LenderInfo
 import com.ratestart.integrator.model.LenderMortgage
 import com.ratestart.integrator.model.LenderStudentLoan
+import com.ratestart.integrator.model.MortgageInfo
 import com.ratestart.integrator.model.PlatformProperty
 import com.ratestart.integrator.repo.AutoEquity
 import com.ratestart.integrator.repo.AutoEquityRepository
@@ -59,50 +64,77 @@ class RateStartService {
     @Autowired
     CategoryRepository tipsRepository
 
-    @Trace(dispatcher = true)
-    Optional<AdPixel> create(String accountId, String accessToken, AdPixel adPixel) {
 
-        NewRelic.incrementCounter("Custom/Service/AdPixel/create/initiated")
+    Optional<Object> createLenderMortgage(LenderMortgage lenderMortgage) {
 
-        Objects.requireNonNull(accountId, "Account Id may not be null!")
-        Objects.requireNonNull(adPixel, "AdPixel object may not be null!")
-
-        String endPointURL = enrichApiUrlForCreate(accountId, accessToken)
-
-        log.info("Creating AdPixel ${adPixel} using account id ${accountId}")
-        AdPixel adPixelResponse = (AdPixel)apiCaller.call(
-                endPointURL,
-                new ParameterizedTypeReference<AdPixel>() {},
-                Optional.ofNullable(adPixel),
-                HttpMethod.POST)
-
-        NewRelic.incrementCounter("Custom/Service/AdPixel/create/succeeded")
-        Optional.ofNullable(adPixelResponse)
+        Objects.requireNonNull(lenderMortgage, "LenderMortgage is null!")
+        Mortgage mortgage = convertMortgageInfoToMortgage(lenderMortgage)
+        mortgage = mortgageRepository.save(mortgage)
+        lenderMortgage.mortgageId = mortgage.idMortgage
+        Optional.of(lenderMortgage)
     }
 
-    @Trace(dispatcher = true)
-    Optional<AdPixelResponse> update(String adPixelId, String accessToken, AdPixel adPixel) {
-
-        NewRelic.incrementCounter("Custom/Service/AdPixel/update/initiated")
-
-        Objects.requireNonNull(adPixelId, "AdPixel Id may not be null!")
-        Objects.requireNonNull(adPixel, "AdPixel object may not be null!")
-        Objects.requireNonNull(accessToken, "Access Token may not be null!")
-
-        String endPointUrl = enrichApiUrlForUpdate(adPixelId, accessToken)
-
-        log.info("Updating AdPixel ${adPixel} using adPixel Id ${adPixelId}")
-        AdPixelResponse adPixelResponse = (AdPixelResponse) apiCaller.call(
-                endPointUrl,
-                new ParameterizedTypeReference<AdPixelResponse>() {},
-                Optional.ofNullable(adPixel),
-                HttpMethod.POST)
-
-        NewRelic.incrementCounter("Custom/Service/AdPixel/update/succeeded")
-        Optional.ofNullable(adPixelResponse)
+    Mortgage convertMortgageInfoToMortgage(LenderMortgage lenderMortgage) {
+        new Mortgage(
+                 name: lenderMortgage.name,
+                 idLender: lenderMortgage.lenderId,
+                 loanType: LoanType.getLoanType(lenderMortgage.loanType),
+                 loanOption: LoanOption.getLoanOption(lenderMortgage.loanOption),
+                 fees: lenderMortgage.fees,
+                 points: lenderMortgage.points,
+                 apr: lenderMortgage.apr,
+                 ratePeriod: lenderMortgage.ratePeriod,
+                 monthlyPay: lenderMortgage.monthlyPay,
+                 date: lenderMortgage.date,
+                 nmlsId: lenderMortgage.nmlsId,
+                 logoFileName: lenderMortgage.logoFileName)
     }
 
-    @Trace(dispatcher = true)
+
+
+
+    Optional<Object> loginLender(LenderInfo lenderInfo) {
+
+        Objects.requireNonNull(lenderInfo, "LenderInfo is null!")
+        Objects.requireNonNull(lenderInfo.userName, "UserName cannot be null!")
+        Objects.requireNonNull(lenderInfo.password, "Password cannot be null!")
+
+        Lender lender = lenderRepository.fetchLender(lenderInfo.userName, lenderInfo.password)
+        if (!lender) {
+            Optional.of(new Error(errorMessage: "Invalid Username or password"))
+        } else {
+            convertLenderToLenderInfo(lender)
+        }
+    }
+
+
+
+    Lender convertLenderInfoToLender(LenderInfo lenderInfo) {
+        new Lender(
+                userName: lenderInfo.userName,
+                password: lenderInfo.password,
+                name: lenderInfo.name,
+                email: lenderInfo.email,
+                phone: lenderInfo.phone,
+                isMortgageLender: lenderInfo.isMortgageLender,
+                nmlsId: lenderInfo.nmlsId,
+                stateLicense: lenderInfo.stateLicense,
+                logoFilename: lenderInfo.logoFileName)
+    }
+
+    Optional<LenderInfo> convertLenderToLenderInfo(Lender lender) {
+        LenderInfo lenderInfo =
+                new LenderInfo(idLender: lender.idLender,
+                name: lender.name,
+                email: lender.email,
+                phone: lender.phone,
+                isMortgageLender: lender.isMortgageLender,
+                nmlsId: lender.nmlsId,
+                stateLicense: lender.stateLicense,
+                logoFileName: lender.logoFilename)
+        Optional.of(lenderInfo)
+    }
+
     Optional<List<LenderMortgage>> getLenderMortgages(Long loanTypeId,Long loanOptionId) {
         List<Mortgage> mortgageList = mortgageRepository.fetchMortgages(loanTypeId,loanOptionId)
         List<LenderMortgage> lenderMortgage = domainToModel(mortgageList)

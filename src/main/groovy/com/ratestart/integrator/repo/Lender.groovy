@@ -19,6 +19,14 @@ class Lender implements Serializable {
     Long idLender
 
     @Basic(optional = false)
+    @Column(name = "user_name")
+    String userName
+
+    @Basic(optional = false)
+    @Column(name = "password")
+    String password
+
+    @Basic(optional = false)
     @Column(name = "name")
     String name
 
@@ -30,7 +38,6 @@ class Lender implements Serializable {
     @Column(name = "is_mortgage_lender")
     @Convert(converter = BooleanConverter)
     Boolean isMortgageLender;
-
 
     @Basic(optional = false)
     @Column(name = "nmls_id")

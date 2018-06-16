@@ -17,4 +17,8 @@ enum LoanType {
         !type? UNKNOWN : type
     }
 
+    static LoanType getLoanType(String loanType){
+        LoanType type =  values().find {it.name() == loanType}
+        !type? UNKNOWN : type
+    }
 }

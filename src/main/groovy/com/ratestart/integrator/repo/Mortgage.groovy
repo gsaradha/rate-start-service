@@ -37,7 +37,6 @@ class Mortgage implements Serializable {
     @Column(name = "rate_period")
     Integer ratePeriod
 
-
     @Basic(optional = false)
     @Column(name = "nmls_id")
     String nmlsId
@@ -50,21 +49,11 @@ class Mortgage implements Serializable {
     @Temporal(TemporalType.DATE)
     Date date
 
-
+    @Basic(optional = false)
+    @Column(name = "Lender_idLender_FK")
+    Long idLender
 
     @Basic(optional = false)
-    @Column(name = "description")
-    String loanType
-
-    @Basic(optional = false)
-    @Column(name = "desc")
-    String loanOption
-
-    @Basic(optional = false)
-    @Column(name = "state_license")
-    String stateLicense
-
-   /* @Basic(optional = false)
     @Column(name = "LoanType_idLoanType_FK")
     @Convert(converter = LoanTypeConverter)
     LoanType loanType
@@ -72,7 +61,7 @@ class Mortgage implements Serializable {
     @Basic(optional = false)
     @Column(name = "LoanOption_idLoanOption_FK")
     @Convert(converter = LoanOptionConverter)
-    LoanOption loanOption*/
+    LoanOption loanOption
 
     @Basic(optional = false)
     @Column(name = "name")
@@ -81,6 +70,5 @@ class Mortgage implements Serializable {
     @Basic(optional = false)
     @Column(name = "monthly_pay")
     BigDecimal monthlyPay
-
 
 }

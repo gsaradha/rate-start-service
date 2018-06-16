@@ -9,21 +9,15 @@ import groovy.transform.ToString
 @ToString(includeNames = true, includePackage = false)
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class LenderMortgage {
-
-    Long mortgageId
+class LenderInfo {
+    Long idLender
+    String userName
+    String password
     String name
-    Long lenderId
-    String loanType
-    String loanOption
-    BigDecimal fees
-    Integer points
-    BigDecimal apr
-    Integer ratePeriod
-    BigDecimal monthlyPay
-    Date date
+    String email
+    Boolean isMortgageLender
     String nmlsId
     String stateLicense
+    Integer phone
     String logoFileName
-
 }
