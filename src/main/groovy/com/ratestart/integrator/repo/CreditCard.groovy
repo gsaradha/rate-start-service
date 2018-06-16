@@ -1,5 +1,7 @@
 package com.ratestart.integrator.repo
 
+import com.ratestart.integrator.domain.CardType
+import com.ratestart.integrator.domain.CardTypeConverter
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
@@ -21,10 +23,10 @@ class CreditCard implements Serializable {
     @Column(name = "Lender_idLender_FK")
     Long lenderId
 
-   /* @Basic(optional = false)
-    @Column(name = "LoanType_idLoanType_FK")
-    @Convert(converter = LoanTypeConverter)
-    LoanType loanType*/
+    @Basic(optional = false)
+    @Column(name = "CardType_idCardType_FK")
+    @Convert(converter = CardTypeConverter)
+    CardType cardType
 
     @Basic(optional = false)
     @Column(name = "intro_apr_purchase")
@@ -42,7 +44,6 @@ class CreditCard implements Serializable {
     @Column(name = "after_intro_apr")
     BigDecimal introApr
 
-
     @Basic(optional = false)
     @Column(name = "logo_filename")
     String logoFilename
@@ -51,16 +52,10 @@ class CreditCard implements Serializable {
     @Temporal(TemporalType.DATE)
     Date date
 
+    @Column(name = "name")
+    String name
+
     @Column(name = "conditions")
     String conditions
-
-    @Basic(optional = false)
-    @Column(name = "description")
-    String cardType
-
-    @Basic(optional = false)
-    @Column(name = "state_license")
-    String stateLicense
-
 
 }

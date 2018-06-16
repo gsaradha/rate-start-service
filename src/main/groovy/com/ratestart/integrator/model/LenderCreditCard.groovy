@@ -11,6 +11,7 @@ class LenderCreditCard {
 
     Long idCreditCard
     Long lenderId
+    String name
     BigDecimal purchase
     BigDecimal balance
     BigDecimal cashAdvance

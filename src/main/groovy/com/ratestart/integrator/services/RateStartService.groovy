@@ -58,6 +58,29 @@ class RateStartService {
     @Autowired
     CategoryRepository tipsRepository
 
+    Optional<Object> createLenderCreditCard(LenderCreditCard lenderCreditCard) {
+
+        Objects.requireNonNull(lenderCreditCard, "LenderCreditCard is null!")
+        CreditCard creditCard = convertToCreditCard(lenderCreditCard)
+        creditCard = creditCardRepository.save(creditCard)
+        lenderCreditCard.idCreditCard = creditCard.idCreditCard
+        Optional.of(lenderCreditCard)
+    }
+
+    CreditCard convertToCreditCard(LenderCreditCard lenderCreditCard) {
+        new CreditCard(
+                lenderId: lenderCreditCard.lenderId,
+                name: lenderCreditCard.name,
+                purchase: lenderCreditCard.purchase,
+                balance: lenderCreditCard.balance,
+                cashAdvance: lenderCreditCard.cashAdvance,
+                introApr: lenderCreditCard.introApr,
+                conditions:lenderCreditCard.conditions,
+                cardType: lenderCreditCard.cardType,
+                logoFilename: lenderCreditCard.logoFileName
+        )
+    }
+
     Optional<Object> createLenderAutoEquity(LenderAutoEquity lenderAutoEquity) {
 
         Objects.requireNonNull(lenderAutoEquity, "LenderAutoEquity is null!")
@@ -276,13 +299,13 @@ class RateStartService {
                     new LenderCreditCard(
                             idCreditCard: it.idCreditCard,
                             lenderId: it.lenderId,
+                            name: it.name,
                             purchase: it.purchase,
                             balance: it.balance,
                             cashAdvance: it.cashAdvance,
                             introApr: it.introApr,
                             date:it.date,
                             conditions:it.conditions,
-                            stateLicense: it.stateLicense,
                             cardType: it.cardType,
                             logoFileName: it.logoFilename
                     )
