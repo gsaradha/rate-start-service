@@ -58,6 +58,26 @@ class RateStartService {
     @Autowired
     CategoryRepository tipsRepository
 
+    Optional<Object> createLenderStudentLoan(LenderStudentLoan lenderStudentLoan) {
+
+        Objects.requireNonNull(lenderStudentLoan, "LenderStudentLoan is null!")
+        StudentLoan studentLoan = convertToStudentLoan(lenderStudentLoan)
+        studentLoan = studentLoanRepository.save(studentLoan)
+        lenderStudentLoan.idStudentLoan = studentLoan.idStudentLoan
+        Optional.of(lenderStudentLoan)
+    }
+
+    StudentLoan convertToStudentLoan(LenderStudentLoan lenderStudentLoan) {
+        new StudentLoan(
+                idStudentLoan: lenderStudentLoan.idStudentLoan,
+                lenderId: lenderStudentLoan.lenderId,
+                conditions: lenderStudentLoan.conditions,
+                studentLoanCol: lenderStudentLoan.studentLoanCol,
+                apr: lenderStudentLoan.apr,
+                name: lenderStudentLoan.name
+        )
+    }
+
     Optional<Object> createLenderCreditCard(LenderCreditCard lenderCreditCard) {
 
         Objects.requireNonNull(lenderCreditCard, "LenderCreditCard is null!")
@@ -375,11 +395,7 @@ class RateStartService {
                             lenderId:it.lenderId,
                             conditions: it.conditions,
                             studentLoanCol:it.studentLoanCol,
-                            apr:it.apr,
-                            stateLicense: it.stateLicense,
-                            logoFileName: it.logoFileName,
-                            studentLoanDesc: it.studentLoanDesc
-
+                            apr:it.apr
                     )
             )
         }

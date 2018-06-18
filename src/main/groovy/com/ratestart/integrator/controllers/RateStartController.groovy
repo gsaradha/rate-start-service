@@ -76,6 +76,19 @@ class RateStartController {
         creditCard
     }
 
+    @RequestMapping(value = "/lender/studentLoan", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    Object createLenderStudentLoan(@Valid @RequestBody LenderStudentLoan lenderStudentLoan, BindingResult bindingResult) throws Exception {
+        log.info("LenderStudentLoan Received")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid LenderStudentLoan encountered - ${bindingResult}")
+        }
+        Optional<Object> lenderStudentLoanOptional = rateStartService.createLenderStudentLoan(lenderStudentLoan)
+        Object studentLoan = lenderStudentLoanOptional.get()
+        log.info("Fetched LenderStudentLoan: ${studentLoan}")
+        studentLoan
+    }
+
     @RequestMapping(value = "/lender/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     Object loginLender(@Valid @RequestBody LenderInfo lender, BindingResult bindingResult) throws Exception {

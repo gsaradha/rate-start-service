@@ -14,6 +14,7 @@ class LenderStudentLoan {
 
     Long idStudentLoan
     StudentLoanType studentLoanType
+    String name
     Long lenderId
     String conditions
     String studentLoanCol

@@ -1,6 +1,5 @@
 package com.ratestart.integrator.domain
 
-
 enum StudentLoanType {
     UNKNOWN(null),
     FIXED(1),
@@ -14,6 +13,11 @@ enum StudentLoanType {
 
     static StudentLoanType getLoanType(Long id){
         StudentLoanType type =  values().find {it.id == id}
+        !type? UNKNOWN : type
+    }
+
+    static StudentLoanType getLoanType(String name){
+        StudentLoanType type =  values().find {it.name() == name}
         !type? UNKNOWN : type
     }
 

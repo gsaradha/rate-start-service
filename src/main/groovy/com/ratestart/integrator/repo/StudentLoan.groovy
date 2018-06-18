@@ -1,7 +1,7 @@
 package com.ratestart.integrator.repo
 
-import com.ratestart.integrator.domain.LoanType
-import com.ratestart.integrator.domain.LoanTypeConverter
+import com.ratestart.integrator.domain.StudentLoanType
+import com.ratestart.integrator.domain.StudentLoanTypeConverter
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import javax.persistence.*
@@ -19,13 +19,17 @@ class StudentLoan implements Serializable {
     Long idStudentLoan
 
     @Basic(optional = false)
-    @Column(name = "StudentLoanType_idStudentLoanType_FK")
-    @Convert(converter = LoanTypeConverter)
-    LoanType studentLoanType
-
-    @Basic(optional = false)
     @Column(name = "Lender_idLender_FK")
     Long lenderId
+
+    @Basic(optional = false)
+    @Column(name = "StudentLoanType_idStudentLoanType_FK")
+    @Convert(converter = StudentLoanTypeConverter)
+    StudentLoanType studentLoanType
+
+    @Basic(optional = false)
+    @Column(name = "name")
+    String name
 
     @Basic(optional = false)
     @Column(name = "conditions")
@@ -41,18 +45,10 @@ class StudentLoan implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "credit_range")
-    String credit
+    String creditRange
 
     @Basic(optional = false)
-    @Column(name = "state_license")
-    String stateLicense
-
-    @Basic(optional = false)
-    @Column(name = "logo_filename")
-    String logoFileName
-
-    @Basic(optional = false)
-    @Column(name = "StudentLoanDesc")
-    String studentLoanDesc
+    @Column(name = "loan_term")
+    String loanTerm
 
 }
