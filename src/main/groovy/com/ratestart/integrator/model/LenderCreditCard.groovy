@@ -18,7 +18,7 @@ class LenderCreditCard {
     BigDecimal introApr
     String conditions
     String cardType
-    Date date
+    String date
     String stateLicense
     String logoFileName
 

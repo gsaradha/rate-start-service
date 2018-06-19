@@ -26,6 +26,7 @@ import com.ratestart.integrator.repo.StudentLoan
 import com.ratestart.integrator.repo.StudentLoanRepository
 import com.ratestart.integrator.repo.CategoryTips
 import com.ratestart.integrator.repo.CategoryRepository
+import com.ratestart.integrator.util.DateUtils
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -89,6 +90,7 @@ class RateStartService {
 
     CreditCard convertToCreditCard(LenderCreditCard lenderCreditCard) {
         new CreditCard(
+                idCreditCard: lenderCreditCard.idCreditCard,
                 lenderId: lenderCreditCard.lenderId,
                 name: lenderCreditCard.name,
                 purchase: lenderCreditCard.purchase,
@@ -112,12 +114,13 @@ class RateStartService {
 
     AutoEquity convertLenderAutoEquityToAutoEquity(LenderAutoEquity lenderAutoEquity) {
         new AutoEquity(
+                idAuto: lenderAutoEquity.idAuto,
                 rate:lenderAutoEquity.rate,
                 apr:lenderAutoEquity.apr,
                 credit:lenderAutoEquity.credit,
                 creditRange: lenderAutoEquity.creditRange,
                 conditions: lenderAutoEquity.conditions,
-                date: lenderAutoEquity.date,
+                date: DateUtils.getDate(lenderAutoEquity.date),
                 logoFileName: lenderAutoEquity.logoFileName,
                 idLender: lenderAutoEquity.lenderId,
                 loanOption: LoanOption.getLoanOption(lenderAutoEquity.loanOption),
@@ -136,6 +139,7 @@ class RateStartService {
 
     HomeEquity convertLenderHomeEquityToHomeEquity(LenderHomeEquity lenderHomeEquity) {
                     new HomeEquity(
+                            idHomeEquity: lenderHomeEquity.idHomeEquity,
                             lenderId:lenderHomeEquity.lenderId,
                             loanType: lenderHomeEquity.loanType,
                             name: lenderHomeEquity.name,
@@ -147,7 +151,7 @@ class RateStartService {
                             maxLtv:lenderHomeEquity.maxLtv,
                             stateLicense:lenderHomeEquity.stateLicense,
                             requiredDraw:lenderHomeEquity.requiredDraw,
-                            date: lenderHomeEquity.date,
+                            date: DateUtils.getDate(lenderHomeEquity.date),
                             logoFilename: lenderHomeEquity.logoFileName,
                             conditions: lenderHomeEquity.conditions
                     )
@@ -164,6 +168,7 @@ class RateStartService {
 
     Mortgage convertMortgageInfoToMortgage(LenderMortgage lenderMortgage) {
         new Mortgage(
+                 idMortgage: lenderMortgage.mortgageId,
                  name: lenderMortgage.name,
                  idLender: lenderMortgage.lenderId,
                  loanType: LoanType.getLoanType(lenderMortgage.loanType),
@@ -173,7 +178,7 @@ class RateStartService {
                  apr: lenderMortgage.apr,
                  ratePeriod: lenderMortgage.ratePeriod,
                  monthlyPay: lenderMortgage.monthlyPay,
-                 date: lenderMortgage.date,
+                 date: DateUtils.getDate(lenderMortgage.date),
                  nmlsId: lenderMortgage.nmlsId,
                  logoFileName: lenderMortgage.logoFileName)
     }
@@ -189,6 +194,22 @@ class RateStartService {
             Optional.of(new Error(errorMessage: "Invalid Username or password"))
         } else {
             convertLenderToLenderInfo(lender)
+        }
+    }
+
+    Optional<Object> signUpLender(LenderInfo lenderInfo) {
+
+        Objects.requireNonNull(lenderInfo, "LenderInfo is null!")
+        Objects.requireNonNull(lenderInfo.userName, "UserName cannot be null!")
+        Objects.requireNonNull(lenderInfo.password, "Password cannot be null!")
+
+        Lender lender = lenderRepository.fetchLender(lenderInfo.userName, lenderInfo.password)
+        if (lender) {
+            Optional.of(new Error(errorMessage: "User already exists"))
+        } else {
+            Lender newLender = convertLenderInfoToLender(lenderInfo)
+            lenderRepository.save(newLender)
+            Optional.of(lenderInfo)
         }
     }
 
@@ -238,9 +259,8 @@ class RateStartService {
                             apr: it.apr,
                             ratePeriod: it.ratePeriod,
                             monthlyPay: it.monthlyPay,
-                            date: it.date,
+                            date: DateUtils.getDate(it.date),
                             nmlsId: it.nmlsId,
-                            stateLicense: it.stateLicense,
                             logoFileName: it.logoFileName
                     )
             )
@@ -271,7 +291,7 @@ class RateStartService {
                             maxLtv:it.maxLtv,
                             stateLicense:it.stateLicense,
                             requiredDraw:it.requiredDraw,
-                            date: it.date,
+                            date: DateUtils.getDate(it.date),
                             logoFileName: it.logoFilename,
                             conditions:it.conditions
                     )
@@ -297,7 +317,7 @@ class RateStartService {
                             credit:it.credit,
                             creditRange: it.creditRange,
                             conditions: it.conditions,
-                            date: it.date,
+                            date: DateUtils.getDate(it.date),
                             logoFileName: it.logoFileName,
                             productCondition:it.productCondition
                     )
@@ -308,11 +328,11 @@ class RateStartService {
 
     Optional<List<LenderCreditCard>> getLenderCreditCard(Long cardTypeId) {
         List<CreditCard> creditCardList = creditCardRepository.fetchCreditCard(cardTypeId)
-        List<LenderCreditCard> lenderCreditCardList = equityToCreditCard(creditCardList)
+        List<LenderCreditCard> lenderCreditCardList = convertToLenderCreditCard(creditCardList)
         Optional.ofNullable(lenderCreditCardList)
     }
 
-    List<LenderCreditCard> equityToCreditCard(List<CreditCard> creditCardList) {
+    List<LenderCreditCard> convertToLenderCreditCard(List<CreditCard> creditCardList) {
         List<LenderCreditCard> lenderCreditCards = []
         creditCardList.forEach{it ->
             lenderCreditCards.add(
@@ -324,7 +344,7 @@ class RateStartService {
                             balance: it.balance,
                             cashAdvance: it.cashAdvance,
                             introApr: it.introApr,
-                            date:it.date,
+                            date: DateUtils.getDate(it.date),
                             conditions:it.conditions,
                             cardType: it.cardType,
                             logoFileName: it.logoFilename
@@ -373,7 +393,7 @@ class RateStartService {
                             nmlsId: it.nmlsId,
                             stateLicense: it.stateLicense,
                             phone: it.phone,
-                            logoFileName: it.logoFilename
+                            logoFilename: it.logoFilename
                     )
             )
         }

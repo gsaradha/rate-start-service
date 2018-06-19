@@ -18,7 +18,7 @@ class LenderAutoEquity {
     BigDecimal credit
     String creditRange
     String conditions
-    Date date
+    String date
     String logoFileName
     String option
     String productCondition

@@ -18,7 +18,7 @@ class MortgageInfo {
     BigDecimal apr
     Integer ratePeriod
     BigDecimal monthlyPay
-    Date date
+    String date
     String nmlsId
     String stateLicense
     String logoFileName

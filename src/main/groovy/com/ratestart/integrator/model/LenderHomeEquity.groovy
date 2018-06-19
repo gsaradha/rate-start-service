@@ -21,7 +21,7 @@ class LenderHomeEquity {
     Integer maxLtv
     String stateLicense
     Integer requiredDraw
-    Date date
+    String date
     String logoFileName
     String conditions
 }
