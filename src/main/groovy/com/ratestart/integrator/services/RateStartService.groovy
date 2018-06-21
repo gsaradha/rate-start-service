@@ -259,7 +259,7 @@ class RateStartService {
                             apr: it.apr,
                             ratePeriod: it.ratePeriod,
                             monthlyPay: it.monthlyPay,
-                            date: DateUtils.getDate(it.date),
+                            date: DateUtils.getDateString(it.date),
                             nmlsId: it.nmlsId,
                             logoFileName: it.logoFileName
                     )
@@ -291,7 +291,7 @@ class RateStartService {
                             maxLtv:it.maxLtv,
                             stateLicense:it.stateLicense,
                             requiredDraw:it.requiredDraw,
-                            date: DateUtils.getDate(it.date),
+                            date: DateUtils.getDateString(it.date),
                             logoFileName: it.logoFilename,
                             conditions:it.conditions
                     )
@@ -317,7 +317,7 @@ class RateStartService {
                             credit:it.credit,
                             creditRange: it.creditRange,
                             conditions: it.conditions,
-                            date: DateUtils.getDate(it.date),
+                            date: DateUtils.getDateString(it.date),
                             logoFileName: it.logoFileName,
                             productCondition:it.productCondition
                     )
@@ -344,7 +344,7 @@ class RateStartService {
                             balance: it.balance,
                             cashAdvance: it.cashAdvance,
                             introApr: it.introApr,
-                            date: DateUtils.getDate(it.date),
+                            date: DateUtils.getDateString(it.date),
                             conditions:it.conditions,
                             cardType: it.cardType,
                             logoFileName: it.logoFilename

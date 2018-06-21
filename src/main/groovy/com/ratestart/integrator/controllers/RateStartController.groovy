@@ -25,7 +25,7 @@ class RateStartController {
     RateStartService rateStartService
 
     @RequestMapping(value = "/lender/mortgage", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     Object createLenderMortgage(@Valid @RequestBody LenderMortgage lenderMortgage, BindingResult bindingResult) throws Exception {
         log.info("LenderMortgage Received")
         if(bindingResult.hasErrors()) {
@@ -38,7 +38,7 @@ class RateStartController {
     }
 
     @RequestMapping(value = "/lender/homeEquity", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     Object createLenderHomeEquity(@Valid @RequestBody LenderHomeEquity lenderHomeEquity, BindingResult bindingResult) throws Exception {
         log.info("LenderHomeEquity Received")
         if(bindingResult.hasErrors()) {
@@ -51,7 +51,7 @@ class RateStartController {
     }
 
     @RequestMapping(value = "/lender/autoEquity", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     Object createLenderAutoEquity(@Valid @RequestBody LenderAutoEquity lenderAutoEquity, BindingResult bindingResult) throws Exception {
         log.info("LenderAutoEquity Received")
         if(bindingResult.hasErrors()) {
@@ -64,7 +64,7 @@ class RateStartController {
     }
 
     @RequestMapping(value = "/lender/creditCard", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     Object createLenderCreditCard(@Valid @RequestBody LenderCreditCard lenderCreditCard, BindingResult bindingResult) throws Exception {
         log.info("LenderCreditCard Received")
         if(bindingResult.hasErrors()) {
@@ -77,7 +77,7 @@ class RateStartController {
     }
 
     @RequestMapping(value = "/lender/studentLoan", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     Object createLenderStudentLoan(@Valid @RequestBody LenderStudentLoan lenderStudentLoan, BindingResult bindingResult) throws Exception {
         log.info("LenderStudentLoan Received")
         if(bindingResult.hasErrors()) {
@@ -90,7 +90,7 @@ class RateStartController {
     }
 
     @RequestMapping(value = "/lender/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     Object loginLender(@Valid @RequestBody LenderInfo lender, BindingResult bindingResult) throws Exception {
         log.info("Login Received")
         if(bindingResult.hasErrors()) {
@@ -102,7 +102,7 @@ class RateStartController {
     }
 
     @RequestMapping(value = "/lender/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     Object signUpLender(@Valid @RequestBody LenderInfo lender, BindingResult bindingResult) throws Exception {
         log.info("SignUp Received, preparing to process lender")
         if(bindingResult.hasErrors()) {

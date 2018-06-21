@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 
 class DateUtils {
 
-    static String getDate(Date date) {
+    static String getDateString(Date date) {
         if (date) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd")
             dateFormat.format(date)
