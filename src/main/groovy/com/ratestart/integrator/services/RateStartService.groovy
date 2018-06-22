@@ -12,6 +12,7 @@ import com.ratestart.integrator.model.LenderInfo
 import com.ratestart.integrator.model.LenderMortgage
 import com.ratestart.integrator.model.LenderStudentLoan
 import com.ratestart.integrator.model.PlatformProperty
+import com.ratestart.integrator.model.UserInfo
 import com.ratestart.integrator.repo.AutoEquity
 import com.ratestart.integrator.repo.AutoEquityRepository
 import com.ratestart.integrator.repo.CreditCard
@@ -26,6 +27,8 @@ import com.ratestart.integrator.repo.StudentLoan
 import com.ratestart.integrator.repo.StudentLoanRepository
 import com.ratestart.integrator.repo.CategoryTips
 import com.ratestart.integrator.repo.CategoryRepository
+import com.ratestart.integrator.repo.User
+import com.ratestart.integrator.repo.UserRepository
 import com.ratestart.integrator.util.DateUtils
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
@@ -46,6 +49,9 @@ class RateStartService {
 
     @Autowired
     LenderEquityRepository lenderRepository
+
+    @Autowired
+    UserRepository userRepository
 
     @Autowired
     AutoEquityRepository autoEquityRepository
@@ -197,6 +203,20 @@ class RateStartService {
         }
     }
 
+    Optional<Object> loginUser(UserInfo userInfo) {
+
+        Objects.requireNonNull(userInfo, "UserInfo is null!")
+        Objects.requireNonNull(userInfo.email, "Email cannot be null!")
+        Objects.requireNonNull(userInfo.password, "Password cannot be null!")
+
+        User user = userRepository.fetchUser(userInfo.email, userInfo.password)
+        if (!user) {
+            Optional.of(new Error(errorMessage: "Invalid User email / password"))
+        } else {
+            convertUserToUserInfo(user)
+        }
+    }
+
     Optional<Object> signUpLender(LenderInfo lenderInfo) {
 
         Objects.requireNonNull(lenderInfo, "LenderInfo is null!")
@@ -208,8 +228,26 @@ class RateStartService {
             Optional.of(new Error(errorMessage: "User already exists"))
         } else {
             Lender newLender = convertLenderInfoToLender(lenderInfo)
-            lenderRepository.save(newLender)
+            newLender = lenderRepository.save(newLender)
+            lenderInfo.idLender = newLender.idLender
             Optional.of(lenderInfo)
+        }
+    }
+
+    Optional<Object> signUpUser(UserInfo userInfo) {
+
+        Objects.requireNonNull(userInfo, "UserInfo is null!")
+        Objects.requireNonNull(userInfo.email, "User email cannot be null!")
+        Objects.requireNonNull(userInfo.password, "Password cannot be null!")
+
+        User user = userRepository.fetchUser(userInfo.email, userInfo.password)
+        if (user) {
+            Optional.of(new Error(errorMessage: "User already exists"))
+        } else {
+            User newUser = convertUserInfoToUser(userInfo)
+            newUser = userRepository.save(newUser)
+            userInfo.idUser = newUser.idUser
+            Optional.of(userInfo)
         }
     }
 
@@ -226,16 +264,37 @@ class RateStartService {
                 logoFilename: lenderInfo.logoFileName)
     }
 
+    User convertUserInfoToUser(UserInfo userInfo) {
+        new User(
+                name: userInfo.name,
+                email: userInfo.email,
+                password: userInfo.password,
+                hasSubscribed: userInfo.hasSubscribed
+               )
+    }
+    Optional<UserInfo> convertUserToUserInfo(User user) {
+        UserInfo userInfo =
+                new UserInfo(
+                        idUser: user.idUser,
+                        name: user.name,
+                        email: user.email,
+                        hasSubscribed: user.hasSubscribed,
+                       )
+        Optional.of(userInfo)
+    }
+
     Optional<LenderInfo> convertLenderToLenderInfo(Lender lender) {
         LenderInfo lenderInfo =
-                new LenderInfo(idLender: lender.idLender,
-                name: lender.name,
-                email: lender.email,
-                phone: lender.phone,
-                isMortgageLender: lender.isMortgageLender,
-                nmlsId: lender.nmlsId,
-                stateLicense: lender.stateLicense,
-                logoFileName: lender.logoFilename)
+                new LenderInfo(
+                    idLender: lender.idLender,
+                    name: lender.name,
+                    email: lender.email,
+                    phone: lender.phone,
+                    isMortgageLender: lender.isMortgageLender,
+                    nmlsId: lender.nmlsId,
+                    stateLicense: lender.stateLicense,
+                    logoFileName: lender.logoFilename
+                )
         Optional.of(lenderInfo)
     }
 

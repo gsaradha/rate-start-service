@@ -8,6 +8,7 @@ import com.ratestart.integrator.model.LenderHomeEquity
 import com.ratestart.integrator.model.LenderMortgage
 import com.ratestart.integrator.model.LenderStudentLoan
 import com.ratestart.integrator.model.Category
+import com.ratestart.integrator.model.UserInfo
 import com.ratestart.integrator.services.RateStartService
 import groovy.util.logging.Log4j
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,6 +18,7 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
+@CrossOrigin
 @Log4j
 @RestController
 class RateStartController {
@@ -92,13 +94,25 @@ class RateStartController {
     @RequestMapping(value = "/lender/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     Object loginLender(@Valid @RequestBody LenderInfo lender, BindingResult bindingResult) throws Exception {
-        log.info("Login Received")
+        log.info("Lender Login Received")
         if(bindingResult.hasErrors()) {
             new Error(errorMessage: "Invalid Lender encountered - ${bindingResult}")
         }
         Optional<Object> lenderInfo = rateStartService.loginLender(lender)
         log.info("Fetched LenderInfo: ${lenderInfo.get()}")
         lenderInfo.get()
+    }
+
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    Object loginUser(@Valid @RequestBody UserInfo userInfo, BindingResult bindingResult) throws Exception {
+        log.info("User Login Received")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid User encountered - ${bindingResult}")
+        }
+        Optional<Object> user = rateStartService.loginUser(userInfo)
+        log.info("Fetched UserInfo: ${user.get()}")
+        user.get()
     }
 
     @RequestMapping(value = "/lender/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -111,6 +125,18 @@ class RateStartController {
         Optional<Object> lenderInfo = rateStartService.signUpLender(lender)
         log.info("Fetched LenderInfo: ${lenderInfo.get()}")
         lenderInfo.get()
+    }
+
+    @RequestMapping(value = "/user/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    Object signUpUser(@Valid @RequestBody UserInfo userInfo, BindingResult bindingResult) throws Exception {
+        log.info("SignUp Received, preparing to process user")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid User encountered - ${bindingResult}")
+        }
+        Optional<Object> user = rateStartService.signUpUser(userInfo)
+        log.info("Fetched UserInfo: ${user.get()}")
+        user.get()
     }
 
     @RequestMapping(value = "/lenderMortgages/loanType/{loanTypeId}/loanOption/{loanOptionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -110,6 +110,7 @@ dependencies {
     compile "org.springframework.integration:spring-integration-http:${spring.integration.version}"
     compile "org.springframework.integration:spring-integration-jdbc:${spring.integration.version}"
     compile "org.springframework.integration:spring-integration-groovy:${spring.integration.version}"
+    compile group: 'org.springframework', name: 'spring-web', version: '4.3.9.RELEASE'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.5'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.5'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
