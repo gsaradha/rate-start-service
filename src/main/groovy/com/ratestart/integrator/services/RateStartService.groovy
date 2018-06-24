@@ -5,6 +5,7 @@ import com.ratestart.integrator.domain.LoanType
 import com.ratestart.integrator.domain.ProductOption
 import com.ratestart.integrator.model.Category
 import com.ratestart.integrator.model.Error
+import com.ratestart.integrator.model.FavoriteInfo
 import com.ratestart.integrator.model.LenderAutoEquity
 import com.ratestart.integrator.model.LenderCreditCard
 import com.ratestart.integrator.model.LenderHomeEquity
@@ -17,6 +18,8 @@ import com.ratestart.integrator.repo.AutoEquity
 import com.ratestart.integrator.repo.AutoEquityRepository
 import com.ratestart.integrator.repo.CreditCard
 import com.ratestart.integrator.repo.CreditCardRepository
+import com.ratestart.integrator.repo.Favorite
+import com.ratestart.integrator.repo.FavoriteRepository
 import com.ratestart.integrator.repo.HomeEquity
 import com.ratestart.integrator.repo.HomeEquityRepository
 import com.ratestart.integrator.repo.Lender
@@ -64,6 +67,54 @@ class RateStartService {
 
     @Autowired
     CategoryRepository tipsRepository
+
+    @Autowired
+    FavoriteRepository favoriteRepository
+
+    Optional<List<FavoriteInfo>> fetchFavorites(Long userId) {
+        Objects.requireNonNull(userId, "userId is null!")
+        List<Favorite> favoriteList = favoriteRepository.fetchFavorites(userId)
+        List<FavoriteInfo> favoriteInfoList = convertFavoriteToFavoriteInfo(favoriteList)
+        Optional.of(favoriteInfoList)
+    }
+
+    static List<FavoriteInfo> convertFavoriteToFavoriteInfo(List<Favorite> favoriteList) {
+        List<FavoriteInfo> favoriteInfoList = []
+        favoriteList.forEach { it ->
+            favoriteInfoList.add(
+                    new FavoriteInfo(
+                            favoriteId: it.idFavorites,
+                            userId: it.idUser,
+                            tipId: it.idTip,
+                            tip:  it.tip,
+                            categoryId: it.idCategory
+                    )
+            )
+        }
+        favoriteInfoList
+    }
+
+    Optional<Object> createFavorite(FavoriteInfo favoriteInfo) {
+        Objects.requireNonNull(favoriteInfo, "FavoriteInfo is null!")
+        Favorite favorite = convertToFavorite(favoriteInfo)
+        favorite = favoriteRepository.save(favorite)
+        favoriteInfo.favoriteId = favorite.idFavorites
+        Optional.of(favoriteInfo)
+    }
+
+    void deleteFavorite(Long favoriteId) {
+        Objects.requireNonNull(favoriteId, "favoriteId is null!")
+        favoriteRepository.deleteFavorite(favoriteId)
+    }
+
+    Favorite convertToFavorite(FavoriteInfo favoriteInfo) {
+        new Favorite(
+                idFavorites: favoriteInfo.favoriteId,
+                idUser: favoriteInfo.userId,
+                idTip: favoriteInfo.tipId,
+                idCategory: favoriteInfo.categoryId
+        )
+    }
 
     Optional<Object> createLenderStudentLoan(LenderStudentLoan lenderStudentLoan) {
 

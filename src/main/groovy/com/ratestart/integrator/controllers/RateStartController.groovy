@@ -1,6 +1,7 @@
 package com.ratestart.integrator.controllers
 
 import com.ratestart.integrator.model.Error
+import com.ratestart.integrator.model.FavoriteInfo
 import com.ratestart.integrator.model.LenderInfo
 import com.ratestart.integrator.model.LenderAutoEquity
 import com.ratestart.integrator.model.LenderCreditCard
@@ -25,6 +26,34 @@ class RateStartController {
 
     @Autowired
     RateStartService rateStartService
+
+    @RequestMapping(value = "/users/{userId}/favorites", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    List<FavoriteInfo> fetchFavorites(@PathVariable("userId") Long userId) throws Exception {
+        Optional<List<FavoriteInfo>> favoriteInfoList = rateStartService.fetchFavorites(userId)
+        favoriteInfoList.isPresent() ? favoriteInfoList.get() : null
+    }
+
+    @RequestMapping(value = "/user/favorite", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    Object createFavorite(@Valid @RequestBody FavoriteInfo favoriteInfo, BindingResult bindingResult) throws Exception {
+        log.info("FavoriteInfo Received")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid FavoriteInfo encountered - ${bindingResult}")
+        }
+        Optional<Object> favoriteInfoOptional = rateStartService.createFavorite(favoriteInfo)
+        Object newFavoriteInfo = favoriteInfoOptional.get()
+        log.info("Fetched FavoriteInfo: ${newFavoriteInfo}")
+        newFavoriteInfo
+    }
+
+    @RequestMapping(value = "/favorites/{favoriteId}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    void deleteFavorite(@PathVariable("favoriteId") Long favoriteId) throws Exception {
+        log.info("Delete Favorite Requested")
+        rateStartService.deleteFavorite(favoriteId)
+    }
 
     @RequestMapping(value = "/lender/mortgage", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
