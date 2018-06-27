@@ -132,7 +132,10 @@ class RateStartService {
                 conditions: lenderStudentLoan.conditions,
                 studentLoanCol: lenderStudentLoan.studentLoanCol,
                 apr: lenderStudentLoan.apr,
-                name: lenderStudentLoan.name
+                name: lenderStudentLoan.name,
+                creditRange: lenderStudentLoan.creditRange,
+                loanTerm: lenderStudentLoan.loanTerm
+
         )
     }
 
@@ -525,7 +528,11 @@ class RateStartService {
                             lenderId:it.lenderId,
                             conditions: it.conditions,
                             studentLoanCol:it.studentLoanCol,
-                            apr:it.apr
+                            apr:it.apr,
+                            creditRange: it.creditRange,
+                            loanTerm:it.loanTerm,
+                            logoFileName: it.logoFilename,
+                            phone: it.phone
                     )
             )
         }

@@ -22,5 +22,6 @@ class LenderStudentLoan {
     String creditRange
     String stateLicense
     String logoFileName
-    String studentLoanDesc
+    String phone
+    String loanTerm
 }
