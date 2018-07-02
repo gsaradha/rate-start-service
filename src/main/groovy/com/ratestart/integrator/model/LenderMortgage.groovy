@@ -16,6 +16,7 @@ class LenderMortgage {
     Long lenderId
     String loanType
     String loanOption
+    String loanTerm
     BigDecimal fees
     Integer points
     BigDecimal apr
@@ -25,5 +26,6 @@ class LenderMortgage {
     String nmlsId
     String stateLicense
     String logoFileName
+    Boolean expanded = false
 
 }

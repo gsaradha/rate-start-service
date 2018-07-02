@@ -49,7 +49,7 @@ class Lender implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "phone")
-    Integer phone
+    String phone
 
     @Column(name = "logo_filename")
     String logoFilename

@@ -24,4 +24,6 @@ class LenderHomeEquity {
     String date
     String logoFileName
     String conditions
+    String category
+    String phone
 }

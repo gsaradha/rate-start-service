@@ -213,7 +213,9 @@ class RateStartService {
                             requiredDraw:lenderHomeEquity.requiredDraw,
                             date: DateUtils.getDate(lenderHomeEquity.date),
                             logoFilename: lenderHomeEquity.logoFileName,
-                            conditions: lenderHomeEquity.conditions
+                            conditions: lenderHomeEquity.conditions,
+                            category:lenderHomeEquity.category,
+                            phone: lenderHomeEquity.phone
                     )
     }
 
@@ -352,8 +354,8 @@ class RateStartService {
         Optional.of(lenderInfo)
     }
 
-    Optional<List<LenderMortgage>> getLenderMortgages(Long loanTypeId,Long loanOptionId) {
-        List<Mortgage> mortgageList = mortgageRepository.fetchMortgages(loanTypeId,loanOptionId)
+    Optional<List<LenderMortgage>> getLenderMortgages(Long loanTypeId,Long loanOptionId,Long loanTermId) {
+        List<Mortgage> mortgageList = mortgageRepository.fetchMortgages(loanTypeId,loanOptionId,loanTermId)
         List<LenderMortgage> lenderMortgage = domainToModel(mortgageList)
         Optional.ofNullable(lenderMortgage)
     }
@@ -367,6 +369,7 @@ class RateStartService {
                             name: it.name,
                             loanOption: it.loanOption,
                             loanType: it.loanType,
+                            loanTerm:it.loanTerm,
                             fees: it.fees,
                             points: it.points,
                             apr: it.apr,
@@ -381,8 +384,8 @@ class RateStartService {
         lenderMortgageList
     }
 
-    Optional<List<LenderHomeEquity>> getLenderHomeEquity(Long loanTypeId) {
-        List<HomeEquity> homeEquityList = homeEquityRepository.fetchHomeEquity(loanTypeId)
+    Optional<List<LenderHomeEquity>> getLenderHomeEquity(Long categoryId) {
+        List<HomeEquity> homeEquityList = homeEquityRepository.fetchHomeEquity(categoryId)
         List<LenderHomeEquity> lenderHomeEquity = equityToHomeEquity(homeEquityList)
         Optional.ofNullable(lenderHomeEquity)
     }
@@ -406,7 +409,9 @@ class RateStartService {
                             requiredDraw:it.requiredDraw,
                             date: DateUtils.getDateString(it.date),
                             logoFileName: it.logoFilename,
-                            conditions:it.conditions
+                            conditions:it.conditions,
+                            category: it.category,
+                            phone: it.phone
                     )
             )
         }

@@ -6,6 +6,8 @@ import com.ratestart.integrator.domain.LoanType
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
+import javax.validation.Valid
+
 @ToString(includeNames = true, includePackage = false)
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -18,6 +20,6 @@ class LenderInfo {
     Boolean isMortgageLender
     String nmlsId
     String stateLicense
-    Integer phone
+    String phone
     String logoFileName
 }

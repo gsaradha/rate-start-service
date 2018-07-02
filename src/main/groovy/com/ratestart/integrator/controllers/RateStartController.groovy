@@ -168,19 +168,19 @@ class RateStartController {
         user.get()
     }
 
-    @RequestMapping(value = "/lenderMortgages/loanType/{loanTypeId}/loanOption/{loanOptionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/lenderMortgages/loanType/{loanTypeId}/loanOption/{loanOptionId}/loanTerm/{loanTermId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    List<LenderMortgage> getLenderMortgages(@PathVariable("loanTypeId") Long loanTypeId,@PathVariable("loanOptionId") Long loanOptionId) throws Exception {
-        Optional<List<LenderMortgage>> mortgageList = rateStartService.getLenderMortgages(loanTypeId,loanOptionId)
+    List<LenderMortgage> getLenderMortgages(@PathVariable("loanTypeId") Long loanTypeId,@PathVariable("loanOptionId") Long loanOptionId,@PathVariable("loanTermId") Long loanTermId) throws Exception {
+        Optional<List<LenderMortgage>> mortgageList = rateStartService.getLenderMortgages(loanTypeId,loanOptionId,loanTermId)
         mortgageList.isPresent() ? mortgageList.get() : null
     }
 
-    @RequestMapping(value = "/lenderHomeEquity/loanType/{loanTypeId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/lenderHomeEquity/category/{categoryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    List<LenderHomeEquity> getLenderHomeEquity(@PathVariable("loanTypeId") Long loanTypeId) throws Exception {
-        Optional<List<LenderHomeEquity>> homeEquityList = rateStartService.getLenderHomeEquity(loanTypeId)
+    List<LenderHomeEquity> getLenderHomeEquity(@PathVariable("categoryId") Long categoryId) throws Exception {
+        Optional<List<LenderHomeEquity>> homeEquityList = rateStartService.getLenderHomeEquity(categoryId)
         homeEquityList.isPresent() ? homeEquityList.get() : null
     }
 
