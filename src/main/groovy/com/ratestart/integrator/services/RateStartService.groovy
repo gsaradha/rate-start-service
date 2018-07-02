@@ -71,6 +71,13 @@ class RateStartService {
     @Autowired
     FavoriteRepository favoriteRepository
 
+    void sendNotification(Long lenderId) {
+        Lender lender = lenderRepository.findOne(lenderId)
+        if (lender.isVerified) {
+            log.info("Sending notification to all subscribers")
+        }
+    }
+
     Optional<List<FavoriteInfo>> fetchFavorites(Long userId) {
         Objects.requireNonNull(userId, "userId is null!")
         List<Favorite> favoriteList = favoriteRepository.fetchFavorites(userId)
@@ -121,6 +128,9 @@ class RateStartService {
         Objects.requireNonNull(lenderStudentLoan, "LenderStudentLoan is null!")
         StudentLoan studentLoan = convertToStudentLoan(lenderStudentLoan)
         studentLoan = studentLoanRepository.save(studentLoan)
+
+        sendNotification(studentLoan.lenderId)
+
         lenderStudentLoan.idStudentLoan = studentLoan.idStudentLoan
         Optional.of(lenderStudentLoan)
     }
@@ -130,12 +140,12 @@ class RateStartService {
                 idStudentLoan: lenderStudentLoan.idStudentLoan,
                 lenderId: lenderStudentLoan.lenderId,
                 conditions: lenderStudentLoan.conditions,
+                studentLoanType: lenderStudentLoan.studentLoanType,
                 studentLoanCol: lenderStudentLoan.studentLoanCol,
                 apr: lenderStudentLoan.apr,
                 name: lenderStudentLoan.name,
                 creditRange: lenderStudentLoan.creditRange,
                 loanTerm: lenderStudentLoan.loanTerm
-
         )
     }
 
@@ -144,6 +154,9 @@ class RateStartService {
         Objects.requireNonNull(lenderCreditCard, "LenderCreditCard is null!")
         CreditCard creditCard = convertToCreditCard(lenderCreditCard)
         creditCard = creditCardRepository.save(creditCard)
+
+        sendNotification(creditCard.lenderId)
+
         lenderCreditCard.idCreditCard = creditCard.idCreditCard
         Optional.of(lenderCreditCard)
     }
@@ -168,6 +181,9 @@ class RateStartService {
         Objects.requireNonNull(lenderAutoEquity, "LenderAutoEquity is null!")
         AutoEquity autoEquity = convertLenderAutoEquityToAutoEquity(lenderAutoEquity)
         autoEquity = autoEquityRepository.save(autoEquity)
+
+        sendNotification(autoEquity.idLender)
+
         lenderAutoEquity.idAuto = autoEquity.idAuto
         Optional.of(lenderAutoEquity)
     }
@@ -193,6 +209,9 @@ class RateStartService {
         Objects.requireNonNull(lenderHomeEquity, "LenderHomeEquity is null!")
         HomeEquity homeEquity = convertLenderHomeEquityToHomeEquity(lenderHomeEquity)
         homeEquity = homeEquityRepository.save(homeEquity)
+
+        sendNotification(homeEquity.lenderId)
+
         lenderHomeEquity.idHomeEquity = homeEquity.idHomeEquity
         Optional.of(lenderHomeEquity)
     }
@@ -224,6 +243,9 @@ class RateStartService {
         Objects.requireNonNull(lenderMortgage, "LenderMortgage is null!")
         Mortgage mortgage = convertMortgageInfoToMortgage(lenderMortgage)
         mortgage = mortgageRepository.save(mortgage)
+
+        sendNotification(mortgage.idLender)
+
         lenderMortgage.mortgageId = mortgage.idMortgage
         Optional.of(lenderMortgage)
     }
