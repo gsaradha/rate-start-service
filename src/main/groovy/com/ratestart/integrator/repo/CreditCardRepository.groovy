@@ -12,6 +12,6 @@ interface CreditCardRepository extends CrudRepository<CreditCard, Long> {
 			from CreditCard c join lender l join CardType t on l.idLender=c.Lender_idLender_FK and c.CardType_idCardType_FK=t.idCardType
             where CardType_idCardType_FK=:cardTypeId order by c.after_intro_apr
             """, nativeQuery = true)
-    List<CreditCard> fetchCreditCard(@Param("cardTypeId") Long cardTypeId)
+    List<CreditCard>fetchCreditCard(@Param("cardTypeId") Long cardTypeId)
 
 }

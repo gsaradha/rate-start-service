@@ -2,8 +2,8 @@ package com.ratestart.integrator.repo
 
 import com.ratestart.integrator.domain.CategoryConverter
 import com.ratestart.integrator.domain.CategoryType
-import com.ratestart.integrator.domain.LoanType
-import com.ratestart.integrator.domain.LoanTypeConverter
+import com.ratestart.integrator.domain.HomeLoanType
+import com.ratestart.integrator.domain.HomeLoanTypeConverter
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
@@ -27,8 +27,8 @@ class HomeEquity implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "LoanType_idLoanType_FK")
-    @Convert(converter = LoanTypeConverter)
-    LoanType loanType
+    @Convert(converter = HomeLoanTypeConverter)
+    HomeLoanType loanType
 
     @Column(name = "name")
     String name

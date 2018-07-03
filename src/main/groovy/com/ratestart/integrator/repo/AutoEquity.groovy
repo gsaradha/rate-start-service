@@ -1,5 +1,6 @@
 package com.ratestart.integrator.repo
 
+import com.ratestart.integrator.domain.AutoLoanTerm
 import com.ratestart.integrator.domain.ProductOption
 import com.ratestart.integrator.domain.ProductOptionConverter
 import com.ratestart.integrator.domain.LoanOption
@@ -51,6 +52,10 @@ class AutoEquity implements Serializable {
     @Basic(optional = false)
     @Column(name = "conditions")
     String conditions
+
+    @Basic(optional = false)
+    @Column(name = "loan_term")
+    AutoLoanTerm loanTerm
 
     @Column(name = "date")
     @Temporal(TemporalType.DATE)

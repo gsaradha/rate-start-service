@@ -1,8 +1,10 @@
 package com.ratestart.integrator.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.ratestart.integrator.domain.AutoLoanTerm
 import com.ratestart.integrator.domain.LoanOption
 import com.ratestart.integrator.domain.LoanType
+import com.ratestart.integrator.domain.ProductOption
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
@@ -12,7 +14,8 @@ import groovy.transform.ToString
 class LenderAutoEquity {
     Long idAuto
     Long lenderId
-    String loanOption
+    LoanOption loanOption
+    AutoLoanTerm loanTerm
     BigDecimal rate
     BigDecimal apr
     BigDecimal credit
@@ -21,6 +24,6 @@ class LenderAutoEquity {
     String date
     String logoFileName
     String option
-    String productCondition
+    ProductOption productCondition
     String stateLicense
 }

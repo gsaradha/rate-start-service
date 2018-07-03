@@ -1,6 +1,7 @@
 package com.ratestart.integrator.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.ratestart.integrator.domain.CardType
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
@@ -17,7 +18,7 @@ class LenderCreditCard {
     BigDecimal cashAdvance
     BigDecimal introApr
     String conditions
-    String cardType
+    CardType cardType
     String date
     String stateLicense
     String logoFileName

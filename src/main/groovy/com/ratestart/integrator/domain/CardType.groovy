@@ -3,8 +3,14 @@ package com.ratestart.integrator.domain
 
 enum CardType {
     UNKNOWN(null),
-    FIXED(1),
-    ARM(2)
+    APR(1),
+    Balance(2),
+    Travel(3),
+    TopCards(4),
+    CashBack(4),
+    Rewards(5),
+    GoodCredit(6),
+    BadCredit(7)
 
     Long id
 

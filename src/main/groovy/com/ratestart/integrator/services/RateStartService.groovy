@@ -1,5 +1,6 @@
 package com.ratestart.integrator.services
 
+import com.ratestart.integrator.domain.AutoLoanTerm
 import com.ratestart.integrator.domain.LoanOption
 import com.ratestart.integrator.domain.LoanType
 import com.ratestart.integrator.domain.ProductOption
@@ -199,8 +200,9 @@ class RateStartService {
                 date: DateUtils.getDate(lenderAutoEquity.date),
                 logoFileName: lenderAutoEquity.logoFileName,
                 idLender: lenderAutoEquity.lenderId,
-                loanOption: LoanOption.getLoanOption(lenderAutoEquity.loanOption),
-                productCondition: ProductOption.getProductOption(lenderAutoEquity.productCondition)
+                loanOption: lenderAutoEquity.loanOption,
+                loanTerm: lenderAutoEquity.loanTerm,
+                productCondition: lenderAutoEquity.productCondition
         )
     }
 
@@ -339,6 +341,7 @@ class RateStartService {
                 isMortgageLender: lenderInfo.isMortgageLender,
                 nmlsId: lenderInfo.nmlsId,
                 stateLicense: lenderInfo.stateLicense,
+                isVerified: lenderInfo.isVerified,
                 logoFilename: lenderInfo.logoFileName)
     }
 
@@ -371,6 +374,7 @@ class RateStartService {
                     isMortgageLender: lender.isMortgageLender,
                     nmlsId: lender.nmlsId,
                     stateLicense: lender.stateLicense,
+                        isVerified: lender.isVerified,
                     logoFileName: lender.logoFilename
                 )
         Optional.of(lenderInfo)
@@ -455,6 +459,8 @@ class RateStartService {
                             rate:it.rate,
                             apr:it.apr,
                             credit:it.credit,
+                            loanTerm: it.loanTerm,
+                            loanOption: it.loanOption,
                             creditRange: it.creditRange,
                             conditions: it.conditions,
                             date: DateUtils.getDateString(it.date),
@@ -554,6 +560,7 @@ class RateStartService {
                             idStudentLoan: it.idStudentLoan,
                             lenderId:it.lenderId,
                             conditions: it.conditions,
+                            studentLoanType: it.studentLoanType,
                             studentLoanCol:it.studentLoanCol,
                             apr:it.apr,
                             creditRange: it.creditRange,

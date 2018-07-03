@@ -21,5 +21,6 @@ class LenderInfo {
     String nmlsId
     String stateLicense
     String phone
+    Boolean isVerified
     String logoFileName
 }

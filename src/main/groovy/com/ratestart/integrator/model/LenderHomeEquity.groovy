@@ -1,6 +1,7 @@
 package com.ratestart.integrator.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.ratestart.integrator.domain.HomeLoanType
 import com.ratestart.integrator.domain.LoanType
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
@@ -11,7 +12,7 @@ import groovy.transform.ToString
 class LenderHomeEquity {
     Long idHomeEquity
     Long lenderId
-    String loanType
+    HomeLoanType loanType
     String name
     BigDecimal rate
     String credit
