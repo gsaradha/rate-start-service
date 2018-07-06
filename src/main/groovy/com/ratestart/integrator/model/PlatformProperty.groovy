@@ -11,4 +11,11 @@ class PlatformProperty {
     @Value('${RateStart.Media.Path}')
     String mediaPath
 
+    @Value('${RateStart.Server.Key}')
+    String serverKey
+
+    @Value('${RateStart.Server.Url}')
+    String serverUrl
+
+
 }

@@ -1,9 +1,7 @@
 package com.ratestart.integrator.services
 
-import com.ratestart.integrator.domain.AutoLoanTerm
 import com.ratestart.integrator.domain.LoanOption
 import com.ratestart.integrator.domain.LoanType
-import com.ratestart.integrator.domain.ProductOption
 import com.ratestart.integrator.model.Category
 import com.ratestart.integrator.model.Error
 import com.ratestart.integrator.model.FavoriteInfo
@@ -72,10 +70,14 @@ class RateStartService {
     @Autowired
     FavoriteRepository favoriteRepository
 
+    @Autowired
+    NotificationService notificationService
+
     void sendNotification(Long lenderId) {
         Lender lender = lenderRepository.findOne(lenderId)
         if (lender.isVerified) {
             log.info("Sending notification to all subscribers")
+            notificationService.sendNotification()
         }
     }
 
