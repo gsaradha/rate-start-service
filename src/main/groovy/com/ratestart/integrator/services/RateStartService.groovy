@@ -83,8 +83,19 @@ class RateStartService {
     void saveUserAlert(UserAlert userAlert) {
         Objects.requireNonNull(userAlert, "UserAlert is null!")
         SubscriptionAlert subscriptionAlert = new SubscriptionAlert(deviceToken: userAlert.deviceToken, idAlert: userAlert.alertId)
-        subscriptionAlertRepository.save(subscriptionAlert)
+
+        Integer subscriptionAlertId = subscriptionAlertRepository.findExistingAlert(userAlert.alertId, userAlert.deviceToken)
+        subscriptionAlert.idSubscriptionAlert = subscriptionAlertId
+
+        if (subscriptionAlertId && !userAlert.isActive) {
+            subscriptionAlertRepository.delete(subscriptionAlertId.toLong())
+
+        } else if (!subscriptionAlertId && userAlert.isActive) {
+            subscriptionAlertRepository.save(subscriptionAlert)
+
+        }
         log.info("User Alert Saved")
+
     }
 
     void sendNotification(Long lenderId, LenderType lenderType, BigDecimal rate) {

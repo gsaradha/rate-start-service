@@ -11,5 +11,6 @@ class UserAlert {
 
     String deviceToken
     Long alertId
+    Boolean isActive = true
 
 }
