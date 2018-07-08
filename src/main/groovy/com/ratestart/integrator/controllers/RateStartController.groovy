@@ -9,6 +9,7 @@ import com.ratestart.integrator.model.LenderHomeEquity
 import com.ratestart.integrator.model.LenderMortgage
 import com.ratestart.integrator.model.LenderStudentLoan
 import com.ratestart.integrator.model.Category
+import com.ratestart.integrator.model.UserAlert
 import com.ratestart.integrator.model.UserInfo
 import com.ratestart.integrator.services.RateStartService
 import groovy.util.logging.Log4j
@@ -53,6 +54,16 @@ class RateStartController {
     void deleteFavorite(@PathVariable("favoriteId") Long favoriteId) throws Exception {
         log.info("Delete Favorite Requested")
         rateStartService.deleteFavorite(favoriteId)
+    }
+
+    @RequestMapping(value = "/user/alert", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    void saveUserAlert(@Valid @RequestBody UserAlert userAlert, BindingResult bindingResult) throws Exception {
+        log.info("UserAlert Received")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid UserAlert encountered - ${bindingResult}")
+        }
+        rateStartService.saveUserAlert(userAlert)
     }
 
     @RequestMapping(value = "/lender/mortgage", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

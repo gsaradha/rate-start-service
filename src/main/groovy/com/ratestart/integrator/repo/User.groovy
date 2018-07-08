@@ -35,5 +35,4 @@ class User implements Serializable {
     @Convert(converter = BooleanConverter)
     Boolean hasSubscribed
 
-
 }

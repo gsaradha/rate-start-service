@@ -1,5 +1,6 @@
 package com.ratestart.integrator.services
 
+import com.ratestart.integrator.domain.LenderType
 import com.ratestart.integrator.domain.LoanOption
 import com.ratestart.integrator.domain.LoanType
 import com.ratestart.integrator.model.Category
@@ -12,6 +13,7 @@ import com.ratestart.integrator.model.LenderInfo
 import com.ratestart.integrator.model.LenderMortgage
 import com.ratestart.integrator.model.LenderStudentLoan
 import com.ratestart.integrator.model.PlatformProperty
+import com.ratestart.integrator.model.UserAlert
 import com.ratestart.integrator.model.UserInfo
 import com.ratestart.integrator.repo.AutoEquity
 import com.ratestart.integrator.repo.AutoEquityRepository
@@ -29,6 +31,8 @@ import com.ratestart.integrator.repo.StudentLoan
 import com.ratestart.integrator.repo.StudentLoanRepository
 import com.ratestart.integrator.repo.CategoryTips
 import com.ratestart.integrator.repo.CategoryRepository
+import com.ratestart.integrator.repo.SubscriptionAlert
+import com.ratestart.integrator.repo.SubscriptionAlertRepository
 import com.ratestart.integrator.repo.User
 import com.ratestart.integrator.repo.UserRepository
 import com.ratestart.integrator.util.DateUtils
@@ -73,11 +77,21 @@ class RateStartService {
     @Autowired
     NotificationService notificationService
 
-    void sendNotification(Long lenderId) {
+    @Autowired
+    SubscriptionAlertRepository subscriptionAlertRepository
+
+    void saveUserAlert(UserAlert userAlert) {
+        Objects.requireNonNull(userAlert, "UserAlert is null!")
+        SubscriptionAlert subscriptionAlert = new SubscriptionAlert(deviceToken: userAlert.deviceToken, idAlert: userAlert.alertId)
+        subscriptionAlertRepository.save(subscriptionAlert)
+        log.info("User Alert Saved")
+    }
+
+    void sendNotification(Long lenderId, LenderType lenderType, BigDecimal rate) {
         Lender lender = lenderRepository.findOne(lenderId)
         if (lender.isVerified) {
             log.info("Sending notification to all subscribers")
-            notificationService.sendNotification()
+            notificationService.sendNotification(lenderType, rate)
         }
     }
 
@@ -132,7 +146,7 @@ class RateStartService {
         StudentLoan studentLoan = convertToStudentLoan(lenderStudentLoan)
         studentLoan = studentLoanRepository.save(studentLoan)
 
-        sendNotification(studentLoan.lenderId)
+        sendNotification(studentLoan.lenderId, LenderType.STUDENT, studentLoan.apr)
 
         lenderStudentLoan.idStudentLoan = studentLoan.idStudentLoan
         Optional.of(lenderStudentLoan)
@@ -158,7 +172,7 @@ class RateStartService {
         CreditCard creditCard = convertToCreditCard(lenderCreditCard)
         creditCard = creditCardRepository.save(creditCard)
 
-        sendNotification(creditCard.lenderId)
+        sendNotification(creditCard.lenderId, LenderType.CREDIT, creditCard.purchase)
 
         lenderCreditCard.idCreditCard = creditCard.idCreditCard
         Optional.of(lenderCreditCard)
@@ -185,7 +199,7 @@ class RateStartService {
         AutoEquity autoEquity = convertLenderAutoEquityToAutoEquity(lenderAutoEquity)
         autoEquity = autoEquityRepository.save(autoEquity)
 
-        sendNotification(autoEquity.idLender)
+        sendNotification(autoEquity.idLender, LenderType.AUTO, autoEquity.apr)
 
         lenderAutoEquity.idAuto = autoEquity.idAuto
         Optional.of(lenderAutoEquity)
@@ -214,7 +228,7 @@ class RateStartService {
         HomeEquity homeEquity = convertLenderHomeEquityToHomeEquity(lenderHomeEquity)
         homeEquity = homeEquityRepository.save(homeEquity)
 
-        sendNotification(homeEquity.lenderId)
+        sendNotification(homeEquity.lenderId, LenderType.HOME, homeEquity.rate)
 
         lenderHomeEquity.idHomeEquity = homeEquity.idHomeEquity
         Optional.of(lenderHomeEquity)
@@ -248,7 +262,7 @@ class RateStartService {
         Mortgage mortgage = convertMortgageInfoToMortgage(lenderMortgage)
         mortgage = mortgageRepository.save(mortgage)
 
-        sendNotification(mortgage.idLender)
+        sendNotification(mortgage.idLender, LenderType.MORTGAGE, mortgage.apr)
 
         lenderMortgage.mortgageId = mortgage.idMortgage
         Optional.of(lenderMortgage)

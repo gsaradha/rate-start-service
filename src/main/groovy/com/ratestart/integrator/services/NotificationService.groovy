@@ -1,6 +1,9 @@
 package com.ratestart.integrator.services
 
+import com.ratestart.integrator.domain.LenderType
 import com.ratestart.integrator.model.PlatformProperty
+import com.ratestart.integrator.repo.SubscriptionAlert
+import com.ratestart.integrator.repo.SubscriptionAlertRepository
 import groovy.util.logging.Slf4j
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,11 +16,21 @@ class NotificationService {
     @Autowired
     PlatformProperty platformProperty
 
-    void sendNotification() {
+    @Autowired
+    SubscriptionAlertRepository alertRepository
 
-        String title = "RateStart Title"
-        String message = "RateStart Body"
-        String type = "RateStart Type"
+    void sendNotification(LenderType lenderType, BigDecimal rate) {
+
+        String title = "Rate Alert!"
+        String message = "${lenderType.message}${rate}"
+        String type = "RateStart"
+
+        List<SubscriptionAlert> subscriptionAlertList = alertRepository.fetchAllUserAlerts(lenderType.id)
+        if (subscriptionAlertList.isEmpty()) {
+            log.info("No User Alerts found..")
+            log.info("Exiting notification")
+            return
+        }
 
         URL url = new URL(platformProperty.serverUrl)
         HttpURLConnection conn = (HttpURLConnection) url.openConnection()
@@ -30,31 +43,42 @@ class NotificationService {
         conn.setRequestProperty("Authorization","key="+platformProperty.serverKey)
         conn.setRequestProperty("Content-Type","application/json")
 
+        subscriptionAlertList.forEach { it ->
+
+            JSONObject json = buildJsonMessage(title, message, it.deviceToken)
+            log.info("Notification JSON -> " + json.toString())
+
+            sendAlert(conn, json)
+            log.info("Alert Response: " + conn.getResponseCode() + "   :   " + conn.getResponseMessage())
+
+        }
+        conn.disconnect()
+
+    }
+
+    static JSONObject buildJsonMessage(String title, String message, String deviceToken) {
         JSONObject json = new JSONObject()
 
         JSONObject data = new JSONObject()
         data.put("title", title)
         data.put("body", message)
-        data.put("type", type)
+        data.put("type", "RateStart")
 
         JSONObject notification = new JSONObject()
         notification.put("title", title)
         notification.put("body", message)
 
-        json.put("to", "e77_i4VIJbs:APA91bH2EokF2UbFDBAqHr0_HL2RYxtkxdj-ezJox0b5tuLPoI19k9IXBJBRZpxjmden0K3KuZpFjHwfCV-7zQd2cTiHJYZZVYg4AZG_zdTacEFDvP17OzNrpfEG16BPNswZQDgllNdA")
+        json.put("to", deviceToken)
         json.put("data", data)
         json.put("notification", notification)
-
-        log.info("Notification JSON -> " + json.toString())
-
-        OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream())
-        wr.write(json.toString())
-        wr.flush()
-
-        log.info(conn.getResponseCode() + "   :   " + conn.getResponseMessage())
-        conn.disconnect()
+        json
 
     }
 
+    static void sendAlert(HttpURLConnection httpURLConnection, JSONObject jsonObject) {
+        OutputStreamWriter wr = new OutputStreamWriter(httpURLConnection.getOutputStream())
+        wr.write(jsonObject.toString())
+        wr.flush()
+    }
 
 }
