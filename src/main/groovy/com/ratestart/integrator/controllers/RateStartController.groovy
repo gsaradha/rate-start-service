@@ -179,6 +179,14 @@ class RateStartController {
         user.get()
     }
 
+    @RequestMapping(value = "/user/deviceToken/alerts", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    List<UserAlert> getUserAlerts(@Valid @RequestBody UserAlert userAlert) throws Exception {
+        Optional<List<UserAlert>> userAlerts = rateStartService.fetchUserAlerts(userAlert.deviceToken)
+        userAlerts.isPresent() ? userAlerts.get() : null
+    }
+
     @RequestMapping(value = "/lenderMortgages/loanType/{loanTypeId}/loanOption/{loanOptionId}/loanTerm/{loanTermId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

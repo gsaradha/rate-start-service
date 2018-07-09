@@ -21,4 +21,10 @@ interface SubscriptionAlertRepository extends CrudRepository<SubscriptionAlert, 
             """, nativeQuery = true)
     Integer findExistingAlert(@Param("alertId") Long alertId, @Param("deviceToken") String deviceToken)
 
+    @Query(value="""\
+			    select sa.device_token, sa.idSubscriptionAlert, sa.Alert_idAlert_FK from SubscriptionAlert sa 
+			    where sa.device_token= :deviceToken
+            """, nativeQuery = true)
+    List<SubscriptionAlert> fetchAlertsByDeviceToken(@Param("deviceToken") String deviceToken)
+
 }

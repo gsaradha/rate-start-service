@@ -407,6 +407,15 @@ class RateStartService {
         Optional.of(lenderInfo)
     }
 
+    Optional<List<UserAlert>> fetchUserAlerts(String deviceToken) {
+        List<SubscriptionAlert> subscriptionAlertList = subscriptionAlertRepository.fetchAlertsByDeviceToken(deviceToken)
+        List<UserAlert> userAlertList = []
+        subscriptionAlertList.forEach { it ->
+            userAlertList.add(new UserAlert(alertId: it.idAlert))
+        }
+        Optional.of(userAlertList)
+    }
+
     Optional<List<LenderMortgage>> getLenderMortgages(Long loanTypeId,Long loanOptionId,Long loanTermId) {
         List<Mortgage> mortgageList = mortgageRepository.fetchMortgages(loanTypeId,loanOptionId,loanTermId)
         List<LenderMortgage> lenderMortgage = domainToModel(mortgageList)
