@@ -1,15 +1,10 @@
 package com.ratestart.integrator.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.ratestart.integrator.domain.LoanOption
-import com.ratestart.integrator.domain.LoanType
-import groovy.transform.EqualsAndHashCode
+import com.fasterxml.jackson.annotation.JsonRootName
 import groovy.transform.ToString
 
-import javax.validation.Valid
-
 @ToString(includeNames = true, includePackage = false)
-@EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class LenderInfo {
     Long idLender
@@ -23,4 +18,5 @@ class LenderInfo {
     String phone
     Boolean isVerified
     String logoFileName
+    String base64Logo
 }

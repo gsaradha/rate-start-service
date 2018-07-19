@@ -11,6 +11,7 @@ import com.ratestart.integrator.model.LenderStudentLoan
 import com.ratestart.integrator.model.Category
 import com.ratestart.integrator.model.UserAlert
 import com.ratestart.integrator.model.UserInfo
+import com.ratestart.integrator.services.MediaService
 import com.ratestart.integrator.services.RateStartService
 import groovy.util.logging.Log4j
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
+
 import javax.validation.Valid
 
 @CrossOrigin
@@ -27,6 +29,9 @@ class RateStartController {
 
     @Autowired
     RateStartService rateStartService
+
+    @Autowired
+    MediaService mediaService
 
     @RequestMapping(value = "/users/{userId}/favorites", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -157,12 +162,11 @@ class RateStartController {
 
     @RequestMapping(value = "/lender/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    Object signUpLender(@Valid @RequestBody LenderInfo lender, BindingResult bindingResult) throws Exception {
+    Object signUpLender(@Valid @RequestBody LenderInfo lenderRequest) throws Exception {
         log.info("SignUp Received, preparing to process lender")
-        if(bindingResult.hasErrors()) {
-            new Error(errorMessage: "Invalid Lender encountered - ${bindingResult}")
-        }
-        Optional<Object> lenderInfo = rateStartService.signUpLender(lender)
+        //lenderRequest.base64Logo = mediaService.getBase64Media(file)
+
+        Optional<Object> lenderInfo = rateStartService.signUpLender(lenderRequest)
         log.info("Fetched LenderInfo: ${lenderInfo.get()}")
         lenderInfo.get()
     }

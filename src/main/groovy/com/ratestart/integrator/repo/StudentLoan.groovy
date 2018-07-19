@@ -54,6 +54,9 @@ class StudentLoan implements Serializable {
     @Column(name = "logo_filename", insertable = false, updatable = false)
     String logoFilename
 
+    @Column(name = "base64_logo", insertable = false, updatable = false)
+    String base64Logo
+
     @Column(name = "phone", insertable = false, updatable = false)
     String phone
 

@@ -2,6 +2,7 @@ package com.ratestart.integrator.services
 
 import com.ratestart.integrator.domain.LenderType
 import com.ratestart.integrator.domain.LoanOption
+import com.ratestart.integrator.domain.LoanTerm
 import com.ratestart.integrator.domain.LoanType
 import com.ratestart.integrator.model.Category
 import com.ratestart.integrator.model.Error
@@ -286,6 +287,7 @@ class RateStartService {
                  idLender: lenderMortgage.lenderId,
                  loanType: LoanType.getLoanType(lenderMortgage.loanType),
                  loanOption: LoanOption.getLoanOption(lenderMortgage.loanOption),
+                 loanTerm: LoanTerm.getLoanTerm(lenderMortgage.loanTerm),
                  fees: lenderMortgage.fees,
                  points: lenderMortgage.points,
                  apr: lenderMortgage.apr,
@@ -294,6 +296,7 @@ class RateStartService {
                  date: DateUtils.getDate(lenderMortgage.date),
                  nmlsId: lenderMortgage.nmlsId,
                  logoFileName: lenderMortgage.logoFileName)
+
     }
 
     Optional<Object> loginLender(LenderInfo lenderInfo) {
@@ -332,7 +335,7 @@ class RateStartService {
 
         Lender lender = lenderRepository.fetchLender(lenderInfo.userName, lenderInfo.password)
         if (lender) {
-            Optional.of(new Error(errorMessage: "User already exists"))
+            Optional.of(new Error(errorMessage: "Lender already exists"))
         } else {
             Lender newLender = convertLenderInfoToLender(lenderInfo)
             newLender = lenderRepository.save(newLender)
@@ -369,7 +372,8 @@ class RateStartService {
                 nmlsId: lenderInfo.nmlsId,
                 stateLicense: lenderInfo.stateLicense,
                 isVerified: lenderInfo.isVerified,
-                logoFilename: lenderInfo.logoFileName)
+                logoFilename: lenderInfo.logoFileName,
+                base64Logo: lenderInfo.base64Logo)
     }
 
     User convertUserInfoToUser(UserInfo userInfo) {
@@ -402,7 +406,8 @@ class RateStartService {
                     nmlsId: lender.nmlsId,
                     stateLicense: lender.stateLicense,
                         isVerified: lender.isVerified,
-                    logoFileName: lender.logoFilename
+                    logoFileName: lender.logoFilename,
+                        base64Logo: lender.base64Logo
                 )
         Optional.of(lenderInfo)
     }
@@ -439,7 +444,8 @@ class RateStartService {
                             monthlyPay: it.monthlyPay,
                             date: DateUtils.getDateString(it.date),
                             nmlsId: it.nmlsId,
-                            logoFileName: it.logoFileName
+                            logoFileName: it.logoFileName,
+                            base64Logo: it.base64Logo
                     )
             )
         }
@@ -473,7 +479,8 @@ class RateStartService {
                             logoFileName: it.logoFilename,
                             conditions:it.conditions,
                             category: it.category,
-                            phone: it.phone
+                            phone: it.phone,
+                            base64Logo: it.base64Logo
                     )
             )
         }
@@ -501,6 +508,7 @@ class RateStartService {
                             conditions: it.conditions,
                             date: DateUtils.getDateString(it.date),
                             logoFileName: it.logoFileName,
+                            base64Logo: it.base64Logo,
                             productCondition:it.productCondition
                     )
             )
@@ -529,7 +537,8 @@ class RateStartService {
                             date: DateUtils.getDateString(it.date),
                             conditions:it.conditions,
                             cardType: it.cardType,
-                            logoFileName: it.logoFilename
+                            logoFileName: it.logoFilename,
+                            base64Logo: it.base64Logo
                     )
             )
         }
@@ -602,6 +611,7 @@ class RateStartService {
                             creditRange: it.creditRange,
                             loanTerm:it.loanTerm,
                             logoFileName: it.logoFilename,
+                            base64Logo: it.base64Logo,
                             phone: it.phone
                     )
             )

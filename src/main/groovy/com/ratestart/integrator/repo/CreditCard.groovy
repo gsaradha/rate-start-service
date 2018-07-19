@@ -58,4 +58,6 @@ class CreditCard implements Serializable {
     @Column(name = "conditions")
     String conditions
 
+    @Column(name = "base64_logo", insertable = false, updatable = false)
+    String base64Logo
 }

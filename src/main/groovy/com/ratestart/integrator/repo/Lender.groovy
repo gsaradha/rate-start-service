@@ -54,6 +54,9 @@ class Lender implements Serializable {
     @Column(name = "logo_filename")
     String logoFilename
 
+    @Column(name = "base64_logo")
+    String base64Logo
+
     @Column(name = "is_verified")
     @Convert(converter = BooleanConverter)
     Boolean isVerified

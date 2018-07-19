@@ -66,6 +66,10 @@ class AutoEquity implements Serializable {
     String logoFileName
 
     @Basic(optional = false)
+    @Column(name = "base64_logo", insertable = false, updatable = false)
+    String base64Logo
+
+    @Basic(optional = false)
     @Column(name = "ProductCondition_idProductCondition_FK")
     @Convert(converter = ProductOptionConverter)
     ProductOption productCondition

@@ -13,6 +13,7 @@ class MortgageInfo {
     Long lenderId
     Long loanType
     Long loanOption
+    Long loanTerm
     BigDecimal fees
     Integer points
     BigDecimal apr
@@ -22,6 +23,7 @@ class MortgageInfo {
     String nmlsId
     String stateLicense
     String logoFileName
+    String base64Logo
 }
 
 

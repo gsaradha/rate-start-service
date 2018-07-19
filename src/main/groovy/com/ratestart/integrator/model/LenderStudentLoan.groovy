@@ -24,4 +24,5 @@ class LenderStudentLoan {
     String logoFileName
     String phone
     String loanTerm
+    String base64Logo
 }

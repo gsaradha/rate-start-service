@@ -26,6 +26,7 @@ class LenderMortgage {
     String nmlsId
     String stateLicense
     String logoFileName
+    String base64Logo
     Boolean expanded = false
 
 }

@@ -26,4 +26,5 @@ class LenderAutoEquity {
     String option
     ProductOption productCondition
     String stateLicense
+    String base64Logo
 }

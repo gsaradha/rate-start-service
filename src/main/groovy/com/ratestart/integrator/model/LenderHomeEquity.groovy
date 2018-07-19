@@ -27,4 +27,5 @@ class LenderHomeEquity {
     String conditions
     String category
     String phone
+    String base64Logo
 }

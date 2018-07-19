@@ -22,5 +22,6 @@ class LenderCreditCard {
     String date
     String stateLicense
     String logoFileName
+    String base64Logo
 
 }

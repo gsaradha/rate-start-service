@@ -3,6 +3,7 @@ package com.ratestart.integrator.repo
 import com.ratestart.integrator.domain.LoanOption
 import com.ratestart.integrator.domain.LoanOptionConverter
 import com.ratestart.integrator.domain.LoanTerm
+import com.ratestart.integrator.domain.LoanTermConverter
 import com.ratestart.integrator.domain.LoanType
 import com.ratestart.integrator.domain.LoanTypeConverter
 import groovy.transform.EqualsAndHashCode
@@ -66,7 +67,8 @@ class Mortgage implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "LoanTerm_idLoanTerm_FK")
-    Long loanTerm
+    @Convert(converter = LoanTermConverter)
+    LoanTerm loanTerm
 
     @Basic(optional = false)
     @Column(name = "name")
@@ -75,5 +77,9 @@ class Mortgage implements Serializable {
     @Basic(optional = false)
     @Column(name = "monthly_pay")
     BigDecimal monthlyPay
+
+    @Basic(optional = false)
+    @Column(name = "base64_logo", insertable = false, updatable = false)
+    String base64Logo
 
 }

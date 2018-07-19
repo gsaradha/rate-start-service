@@ -83,4 +83,7 @@ class HomeEquity implements Serializable {
     @Column(name = "phone", insertable = false, updatable = false)
     String phone
 
+    @Column(name = "base64_logo", insertable = false, updatable = false)
+    String base64Logo
+
 }
