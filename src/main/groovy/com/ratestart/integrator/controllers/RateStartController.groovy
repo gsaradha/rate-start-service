@@ -81,6 +81,7 @@ class RateStartController {
         Optional<Object> lenderMortgageOptional = rateStartService.createLenderMortgage(lenderMortgage)
         Object lMortgage = lenderMortgageOptional.get()
         log.info("Fetched LenderMortgage: ${lMortgage}")
+
         lMortgage
     }
 
@@ -237,6 +238,13 @@ class RateStartController {
     Category getCategory(@PathVariable("categoryId") Integer categoryId) throws Exception {
         Optional<Category> categoryOptional = rateStartService.getCategoryTips(categoryId)
         categoryOptional.get()
+    }
+
+    @RequestMapping(value = "/ratestart/hello", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    String getCategory() throws Exception {
+        "RateStart Service says Hello!!"
     }
 
 }
