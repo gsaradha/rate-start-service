@@ -32,27 +32,27 @@ class NotificationService {
             return
         }
 
-        URL url = new URL(platformProperty.serverUrl)
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection()
-
-        conn.setUseCaches(false)
-        conn.setDoInput(true)
-        conn.setDoOutput(true)
-
-        conn.setRequestMethod("POST")
-        conn.setRequestProperty("Authorization","key="+platformProperty.serverKey)
-        conn.setRequestProperty("Content-Type","application/json")
-
         subscriptionAlertList.forEach { it ->
 
             JSONObject json = buildJsonMessage(title, message, it.deviceToken)
             log.info("Notification JSON -> " + json.toString())
 
+            URL url = new URL(platformProperty.serverUrl)
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection()
+
+            conn.setUseCaches(false)
+            conn.setDoInput(true)
+            conn.setDoOutput(true)
+
+            conn.setRequestMethod("POST")
+            conn.setRequestProperty("Authorization","key="+platformProperty.serverKey)
+            conn.setRequestProperty("Content-Type","application/json")
+
             sendAlert(conn, json)
             log.info("Alert Response: " + conn.getResponseCode() + "   :   " + conn.getResponseMessage())
+            conn.disconnect()
 
         }
-        conn.disconnect()
 
     }
 
@@ -79,6 +79,7 @@ class NotificationService {
         OutputStreamWriter wr = new OutputStreamWriter(httpURLConnection.getOutputStream())
         wr.write(jsonObject.toString())
         wr.flush()
+        wr.close()
     }
 
 }
