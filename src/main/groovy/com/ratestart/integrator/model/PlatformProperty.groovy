@@ -17,5 +17,13 @@ class PlatformProperty {
     @Value('${RateStart.Server.Url}')
     String serverUrl
 
+    @Value('${RateStart.Ios.Publish.Key}')
+    String iosPublishKey
+
+    @Value('${RateStart.Ios.Secret.Key}')
+    String iosSecretKey
+
+    @Value('${RateStart.Ios.Server.Url}')
+    String iosServerUrl
 
 }
