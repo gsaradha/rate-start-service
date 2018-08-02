@@ -7,19 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285729c-5b06-4e2a-b3ea-b4cd49880283" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/domain/AutoLoanTerm.groovy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/domain/HomeLoanType.groovy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/domain/HomeLoanTypeConverter.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/domain/CardType.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/domain/CardType.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderAutoEquity.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderAutoEquity.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderCreditCard.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderCreditCard.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderHomeEquity.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderHomeEquity.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderInfo.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderInfo.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/AutoEquity.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/AutoEquity.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/AutoEquityRepository.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/AutoEquityRepository.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/CreditCardRepository.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/CreditCardRepository.groovy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/HomeEquity.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/HomeEquity.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/NotificationService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/NotificationService.groovy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -71,8 +61,8 @@
       <file leaf-file-name="RateStartController.groovy" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="119" selection-start-line="119" selection-end-line="119" />
+            <state relative-caret-position="214">
+              <caret line="42" selection-start-line="42" selection-end-line="42" />
               <folding>
                 <element signature="e#46#89#0" expanded="true" />
               </folding>
@@ -80,89 +70,28 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="NotificationService.groovy" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/NotificationService.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="39" column="10" selection-start-line="39" selection-start-column="10" selection-end-line="39" selection-end-column="10" />
+              <folding>
+                <element signature="e#43#92#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="db.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/db.properties">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
       <file leaf-file-name="RateStartService.groovy" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="135" selection-start-line="135" selection-end-line="135" />
-              <folding>
-                <element signature="e#43#94#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InvocableHandlerMethod.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-web/4.3.9.RELEASE/ac31864038a1c31d5a49c1bef84e5af4a162a655/spring-web-4.3.9.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="137" selection-start-line="137" selection-end-line="137" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServletInvocableHandlerMethod.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webmvc/4.1.6.RELEASE/74e437c914201b70db2022052bc35611ad4beb9a/spring-webmvc-4.1.6.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="112" selection-start-line="112" selection-end-line="112" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RequestMappingHandlerAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webmvc/4.1.6.RELEASE/74e437c914201b70db2022052bc35611ad4beb9a/spring-webmvc-4.1.6.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="704" selection-start-line="704" selection-end-line="704" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractHandlerMethodAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webmvc/4.1.6.RELEASE/74e437c914201b70db2022052bc35611ad4beb9a/spring-webmvc-4.1.6.RELEASE-sources.jar!/org/springframework/web/servlet/mvc/method/AbstractHandlerMethodAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="84" selection-start-line="84" selection-end-line="84" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DispatcherServlet.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webmvc/4.1.6.RELEASE/74e437c914201b70db2022052bc35611ad4beb9a/spring-webmvc-4.1.6.RELEASE-sources.jar!/org/springframework/web/servlet/DispatcherServlet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="895" selection-start-line="895" selection-end-line="895" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FrameworkServlet.java" pinned="false" current-in-tab="true">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webmvc/4.1.6.RELEASE/74e437c914201b70db2022052bc35611ad4beb9a/spring-webmvc-4.1.6.RELEASE-sources.jar!/org/springframework/web/servlet/FrameworkServlet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2223">
-              <caret line="843" selection-start-line="843" selection-end-line="843" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StudentLoan.groovy" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/StudentLoan.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="18" column="22" lean-forward="true" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
-              <folding>
-                <element signature="e#39#93#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LenderStudentLoan.groovy" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderStudentLoan.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="15" column="35" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="35" />
+            <state relative-caret-position="378">
+              <caret line="91" column="5" selection-start-line="91" selection-start-column="5" selection-end-line="91" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -507,7 +436,6 @@
         <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/CategoryTips.groovy" />
         <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/Lender.groovy" />
         <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/LenderEquityRepository.groovy" />
-        <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy" />
         <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderInfo.groovy" />
         <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/MortgageInfo.groovy" />
         <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/domain/HomeLoanType.groovy" />
@@ -522,6 +450,8 @@
         <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/AutoEquity.groovy" />
         <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/LenderAutoEquity.groovy" />
         <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy" />
+        <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy" />
+        <option value="$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/NotificationService.groovy" />
       </list>
     </option>
   </component>
@@ -551,12 +481,26 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
               <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
@@ -600,51 +544,6 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="groovy" type="462c0819:PsiDirectoryNode" />
               <item name="integrator" type="462c0819:PsiDirectoryNode" />
-              <item name="domain" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="groovy" type="462c0819:PsiDirectoryNode" />
-              <item name="integrator" type="462c0819:PsiDirectoryNode" />
-              <item name="init" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="groovy" type="462c0819:PsiDirectoryNode" />
-              <item name="integrator" type="462c0819:PsiDirectoryNode" />
-              <item name="integration" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="groovy" type="462c0819:PsiDirectoryNode" />
-              <item name="integrator" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="groovy" type="462c0819:PsiDirectoryNode" />
-              <item name="integrator" type="462c0819:PsiDirectoryNode" />
-              <item name="repo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="groovy" type="462c0819:PsiDirectoryNode" />
-              <item name="integrator" type="462c0819:PsiDirectoryNode" />
               <item name="services" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -663,13 +562,26 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rate-start-service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rate-start-service" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="integration" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -931,14 +843,14 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92806000" />
+    <option name="totallyTimeSpent" value="97625000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1434" height="817" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="817" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="15" side_tool="true" />
-      <window_info anchor="bottom" id="Application Servers" order="7" weight="0.32859176" />
+      <window_info anchor="bottom" id="Application Servers" order="7" weight="0.32855093" />
       <window_info anchor="right" id="Maven Projects" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
@@ -947,30 +859,57 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39885223" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39598277" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.32998565" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Version Control" order="14" weight="0.32859176" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.40889525" />
+      <window_info anchor="bottom" id="Version Control" order="14" weight="0.32711622" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.40746054" />
       <window_info anchor="bottom" id="Spring" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26077586" />
-      <window_info anchor="right" id="Bean Validation" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32855093" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22603719" />
+      <window_info anchor="right" id="Bean Validation" order="9" weight="0.3297568" />
       <window_info id="Web" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32998565" />
-      <window_info anchor="right" id="Gradle" order="6" weight="0.3297414" />
+      <window_info anchor="right" id="Gradle" order="6" weight="0.32904148" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Build" order="13" weight="0.32859176" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.40889525" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26077586" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Java Enterprise" order="11" />
+      <window_info anchor="bottom" id="Event Log" order="15" side_tool="true" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Application Servers" order="7" weight="0.32859176" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Maven Projects" order="10" />
+      <window_info id="Web" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Spring" order="8" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="Image Layers" order="3" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="14" weight="0.32859176" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32998565" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39885223" />
+      <window_info anchor="bottom" id="Build" order="13" weight="0.32859176" />
+      <window_info anchor="right" id="Gradle" order="6" weight="0.3297414" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info id="Designer" order="2" />
     </layout>
     <layout-to-restore>
       <window_info anchor="bottom" id="Build" order="13" weight="0.32859176" />
@@ -992,7 +931,6 @@
       <window_info anchor="bottom" id="Messages" order="9" weight="0.32998565" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32998565" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="14" weight="0.32859176" />
@@ -1006,8 +944,9 @@
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39885223" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32998565" />
       <window_info anchor="right" id="Bean Validation" order="9" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39885223" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1028,55 +967,44 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy</url>
-          <line>33</line>
-          <properties />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy</url>
-          <line>105</line>
+          <line>115</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy</url>
-          <line>40</line>
-          <properties />
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy</url>
-          <line>419</line>
+          <line>429</line>
           <properties />
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy</url>
-          <line>424</line>
+          <line>434</line>
           <properties />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy</url>
-          <line>413</line>
+          <line>423</line>
           <properties />
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy</url>
-          <line>146</line>
+          <line>153</line>
           <properties />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy</url>
-          <line>128</line>
+          <line>138</line>
           <properties />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy</url>
-          <line>148</line>
+          <line>155</line>
           <properties />
           <option name="timeStamp" value="16" />
         </line-breakpoint>
@@ -1094,7 +1022,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy</url>
-          <line>138</line>
+          <line>148</line>
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
@@ -1112,7 +1040,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy</url>
-          <line>109</line>
+          <line>116</line>
           <properties />
           <option name="timeStamp" value="24" />
         </line-breakpoint>
@@ -1141,38 +1069,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build/classes/main/com/ratestart/integrator/repo/HomeEquityRepository.class" />
-    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/domain/LoanTypeConverter.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/rate-start.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/User.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="35" column="12" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RestResponseEntityExceptionHandler.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/domain/CategoryConverter.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/domain/CategoryType.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1212,13 +1108,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/LenderEquityRepository.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
@@ -1291,13 +1180,6 @@
           <folding>
             <element signature="e#40#91#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/Lender.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="806">
-          <caret line="58" column="12" selection-start-line="58" selection-start-column="12" selection-end-line="58" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -1450,26 +1332,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="135" selection-start-line="135" selection-end-line="135" />
-          <folding>
-            <element signature="e#43#94#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="119" selection-start-line="119" selection-end-line="119" />
-          <folding>
-            <element signature="e#46#89#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-web/4.3.9.RELEASE/ac31864038a1c31d5a49c1bef84e5af4a162a655/spring-web-4.3.9.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -1509,6 +1371,81 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2223">
           <caret line="843" selection-start-line="843" selection-end-line="843" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/model/PlatformProperty.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/EmailService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="20" column="54" selection-start-line="20" selection-start-column="54" selection-end-line="20" selection-end-column="54" />
+          <folding>
+            <element signature="e#43#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context-support/4.1.4.RELEASE/4551b4221801ccc93fa70af43f7e1784119534a3/spring-context-support-4.1.4.RELEASE-sources.jar!/org/springframework/mail/javamail/JavaMailSender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="71" column="16" selection-start-line="71" selection-start-column="16" selection-end-line="71" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/Lender.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/repo/LenderEquityRepository.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="19" column="8" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/RateStartService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="91" column="5" selection-start-line="91" selection-start-column="5" selection-end-line="91" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-web/4.3.9.RELEASE/ac31864038a1c31d5a49c1bef84e5af4a162a655/spring-web-4.3.9.RELEASE-sources.jar!/org/springframework/web/bind/annotation/RequestMethod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="29" column="13" lean-forward="true" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/db.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/controllers/RateStartController.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+          <folding>
+            <element signature="e#46#89#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/groovy/com/ratestart/integrator/services/NotificationService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="10" selection-start-line="39" selection-start-column="10" selection-end-line="39" selection-end-column="10" />
+          <folding>
+            <element signature="e#43#92#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

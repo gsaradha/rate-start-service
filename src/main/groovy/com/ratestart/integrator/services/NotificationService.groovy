@@ -37,7 +37,7 @@ class NotificationService {
         subscriptionAlertList.forEach { it ->
             sendAndroidNotification(title, message, it.deviceToken)
         }
-        sendIosNotification(title, message, deviceTokens)
+        //sendIosNotification(title, message, deviceTokens)
 
     }
 

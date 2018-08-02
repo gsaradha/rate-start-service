@@ -81,6 +81,16 @@ class RateStartService {
     @Autowired
     SubscriptionAlertRepository subscriptionAlertRepository
 
+    @Autowired
+    LenderEquityRepository lenderEquityRepository
+
+    void approveLender(Long lenderId) {
+        Lender lender = lenderEquityRepository.findOne(lenderId)
+        lender.isVerified = true
+        lenderEquityRepository.save(lender)
+        log.info("Lender verified and approved")
+    }
+
     void saveUserAlert(UserAlert userAlert) {
         Objects.requireNonNull(userAlert, "UserAlert is null!")
         SubscriptionAlert subscriptionAlert = new SubscriptionAlert(deviceToken: userAlert.deviceToken, idAlert: userAlert.alertId)

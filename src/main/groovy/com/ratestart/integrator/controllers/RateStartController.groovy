@@ -41,6 +41,13 @@ class RateStartController {
         favoriteInfoList.isPresent() ? favoriteInfoList.get() : null
     }
 
+    @RequestMapping(value = "/lender/{lenderId}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    void approveLender(@PathVariable("lenderId") Long lenderId) throws Exception {
+        log.info("Lender Approval Received")
+        rateStartService.approveLender(lenderId)
+    }
+
     @RequestMapping(value = "/user/favorite", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     Object createFavorite(@Valid @RequestBody FavoriteInfo favoriteInfo, BindingResult bindingResult) throws Exception {
