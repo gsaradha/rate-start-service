@@ -25,7 +25,7 @@ class EmailService {
         helper.setTo((parseReceiverAddress(email.to)))
         helper.setBcc(email.bcc)
         helper.setSubject(email.subject)
-        helper.setText(email.message, true)
+        helper.setText(getEmailBody(email.message), true)
 
         log.info "Email Content: ${email}"
 
@@ -48,6 +48,16 @@ class EmailService {
         log.info("Parsed email address list is ${toEmails}")
 
         (String[])toEmails.toArray()
+
+    }
+
+    String getEmailBody(String message) {
+
+        FileReader fileReader = new FileReader("/EmailTemplate.html")
+        String emailBody = fileReader.getText()
+        emailBody = emailBody.replace("${message}", message)
+        fileReader.close()
+        emailBody
 
     }
 
