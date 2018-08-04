@@ -360,7 +360,7 @@ class RateStartService {
         Objects.requireNonNull(userInfo.email, "User email cannot be null!")
         Objects.requireNonNull(userInfo.password, "Password cannot be null!")
 
-        User user = userRepository.fetchUser(userInfo.email, userInfo.password)
+        User user = userRepository.fetchExistingUser(userInfo.email?.trim())
         if (user) {
             Optional.of(new Error(errorMessage: "User already exists"))
         } else {
