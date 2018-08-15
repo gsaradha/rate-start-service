@@ -40,7 +40,7 @@ class EmailService {
 
     }
 
-    String[] parseReceiverAddress(String toEmail) {
+    static String[] parseReceiverAddress(String toEmail) {
 
         log.info "To Email address/es are ${toEmail}"
         List<String> toEmails = toEmail.tokenize(',')
@@ -51,13 +51,13 @@ class EmailService {
 
     }
 
-    String getEmailBody(String message) {
+    static String getEmailBody(String message) {
 
-        FileReader fileReader = new FileReader("/EmailTemplate.html")
-        String emailBody = fileReader.getText()
-        emailBody = emailBody.replace("${message}", message)
+        FileReader fileReader = new FileReader("src/main/webapp/EmailTemplate.html")
+        String emailContent = fileReader.getText()
+        emailContent = emailContent?.replace("${message}", message)
         fileReader.close()
-        emailBody
+        emailContent
 
     }
 
