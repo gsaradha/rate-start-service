@@ -371,6 +371,23 @@ class RateStartService {
         }
     }
 
+    Optional<Object> signUpUserForgotPassword(UserInfo userInfo) {
+
+        Objects.requireNonNull(userInfo, "UserInfo is null!")
+        Objects.requireNonNull(userInfo.email, "User email cannot be null!")
+        Objects.requireNonNull(userInfo.password, "Password cannot be null!")
+
+        User user = userRepository.fetchExistingUser(userInfo.email?.trim())
+        if (user) {
+            User newUser = convertUserInfoToUser(userInfo)
+            newUser = userRepository.save(newUser)
+            userInfo.idUser = newUser.idUser
+            Optional.of(userInfo)
+        } else {
+            Optional.of(new Error(errorMessage: "User email does not exists"))
+        }
+    }
+
     Lender convertLenderInfoToLender(LenderInfo lenderInfo) {
         new Lender(
                 userName: lenderInfo.userName,

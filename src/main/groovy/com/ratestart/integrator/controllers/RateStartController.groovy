@@ -191,6 +191,18 @@ class RateStartController {
         user.get()
     }
 
+    @RequestMapping(value = "/user/signup/forgot-password", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    Object signUpUserForgotPassword(@Valid @RequestBody UserInfo userInfo, BindingResult bindingResult) throws Exception {
+        log.info("Forgot Password SignUp Received, preparing to process user")
+        if(bindingResult.hasErrors()) {
+            new Error(errorMessage: "Invalid User encountered - ${bindingResult}")
+        }
+        Optional<Object> user = rateStartService.signUpUserForgotPassword(userInfo)
+        log.info("Fetched UserInfo: ${user.get()}")
+        user.get()
+    }
+
     @RequestMapping(value = "/user/deviceToken/alerts", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
