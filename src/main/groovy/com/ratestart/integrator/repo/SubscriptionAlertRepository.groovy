@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param
 interface SubscriptionAlertRepository extends CrudRepository<SubscriptionAlert, Long> {
 
     @Query(value="""\
-			    select distinct sa.device_token, sa.idSubscriptionAlert, sa.Alert_idAlert_FK 
+			    select distinct sa.device_token, sa.idSubscriptionAlert, sa.Alert_idAlert_FK, sa.device_type  
                 from SubscriptionAlert sa join Alert alert on sa.Alert_idAlert_FK=alert.idAlert
                 where alert.idAlert = :alertId or sa.Alert_idAlert_FK=6
             """, nativeQuery = true)

@@ -9,6 +9,7 @@ import groovy.transform.ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class UserAlert {
 
+    String deviceType
     String deviceToken
     Long alertId
     Boolean isActive = true

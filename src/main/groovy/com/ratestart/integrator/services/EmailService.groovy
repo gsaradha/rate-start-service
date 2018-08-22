@@ -25,7 +25,7 @@ class EmailService {
         helper.setTo((parseReceiverAddress(email.to)))
         helper.setBcc(email.bcc)
         helper.setSubject(email.subject)
-        helper.setText(getEmailBody(email.message), true)
+        helper.setText(getEmailBody(email.message,email.lenderId), true)
 
         log.info "Email Content: ${email}"
 
@@ -51,11 +51,12 @@ class EmailService {
 
     }
 
-    static String getEmailBody(String message) {
+    static String getEmailBody(String message,String lenderId) {
 
-        FileReader fileReader = new FileReader("src/main/webapp/EmailTemplate.html")
+        FileReader fileReader = new FileReader("/Users/saradhabalakrishnan/projects/rate-start-service/src/main/webapp/EmailTemplate.html")
         String emailContent = fileReader.getText()
-        emailContent = emailContent?.replace("${message}", message)
+        emailContent = emailContent?.replace('${message}', message)
+        emailContent = emailContent?.replace('${lenderId}', lenderId)
         fileReader.close()
         emailContent
 

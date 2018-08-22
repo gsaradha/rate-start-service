@@ -14,5 +14,6 @@ class Email {
     String bcc
     String subject
     String message
+    String lenderId
 
 }

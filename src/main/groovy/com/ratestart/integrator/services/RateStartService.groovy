@@ -93,7 +93,8 @@ class RateStartService {
 
     void saveUserAlert(UserAlert userAlert) {
         Objects.requireNonNull(userAlert, "UserAlert is null!")
-        SubscriptionAlert subscriptionAlert = new SubscriptionAlert(deviceToken: userAlert.deviceToken, idAlert: userAlert.alertId)
+        SubscriptionAlert subscriptionAlert = new SubscriptionAlert(
+                deviceToken: userAlert.deviceToken, idAlert: userAlert.alertId, deviceType: userAlert.deviceType)
 
         Integer subscriptionAlertId = subscriptionAlertRepository.findExistingAlert(userAlert.alertId, userAlert.deviceToken)
         subscriptionAlert.idSubscriptionAlert = subscriptionAlertId

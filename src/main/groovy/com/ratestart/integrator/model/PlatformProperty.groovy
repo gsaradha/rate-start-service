@@ -17,13 +17,10 @@ class PlatformProperty {
     @Value('${RateStart.Server.Url}')
     String serverUrl
 
-    @Value('${RateStart.Ios.Publish.Key}')
-    String iosPublishKey
+    @Value('${RateStart.Ios.P12.Cert.Path}')
+    String iosP12Path
 
-    @Value('${RateStart.Ios.Secret.Key}')
-    String iosSecretKey
-
-    @Value('${RateStart.Ios.Server.Url}')
-    String iosServerUrl
+    @Value('${RateStart.Ios.Cert.Password}')
+    String iosCertPassword
 
 }

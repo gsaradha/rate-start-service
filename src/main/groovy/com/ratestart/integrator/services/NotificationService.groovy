@@ -1,14 +1,18 @@
 package com.ratestart.integrator.services
 
+import com.notnoop.apns.APNS
+import com.notnoop.apns.ApnsService
+import com.notnoop.apns.internal.Utilities
 import com.ratestart.integrator.domain.LenderType
 import com.ratestart.integrator.model.PlatformProperty
 import com.ratestart.integrator.repo.SubscriptionAlert
 import com.ratestart.integrator.repo.SubscriptionAlertRepository
 import groovy.util.logging.Slf4j
-import org.apache.commons.codec.digest.DigestUtils
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+
+import java.nio.charset.StandardCharsets
 
 @Slf4j
 @Service
@@ -32,12 +36,13 @@ class NotificationService {
             return
         }
 
-        List<String> deviceTokens = subscriptionAlertList.deviceToken
-
         subscriptionAlertList.forEach { it ->
-            sendAndroidNotification(title, message, it.deviceToken)
+            if (it.deviceType.equalsIgnoreCase("andriod")) {
+                sendAndroidNotification(title, message, it.deviceToken)
+            } else if (it.deviceType.equalsIgnoreCase("ios")) {
+                sendIosNotification(message, it.deviceToken)
+            }
         }
-        //sendIosNotification(title, message, deviceTokens)
 
     }
 
@@ -56,18 +61,6 @@ class NotificationService {
         json.put("to", deviceToken)
         json.put("data", data)
         json.put("notification", notification)
-        json
-
-    }
-
-    static JSONObject buildIosJsonMessage(String message, List<String> deviceTokens) {
-        JSONObject json = new JSONObject()
-
-        JSONObject aps = new JSONObject()
-        aps.put("alert", message)
-
-        json.put("device_tokens", deviceTokens)
-        json.put("aps", aps)
         json
 
     }
@@ -100,28 +93,29 @@ class NotificationService {
 
     }
 
-    void sendIosNotification(String title, String message, List<String> deviceTokens) {
-        JSONObject json = buildIosJsonMessage(message, deviceTokens)
-        log.info("IOS Notification JSON -> " + json.toString())
+    void sendIosNotification(String message, String deviceToken) {
+        log.info("IOS Notification APNS -> " + message)
+        try {
+            ApnsService service =
+                    APNS.newService()
+                            .withCert("/Users/saradhabalakrishnan/Desktop/PushNotification/iphone_dev.p12", platformProperty.iosCertPassword)
+                            .withSandboxDestination()
+                            .build()
 
-        URL url = new URL("${platformProperty.iosServerUrl}?publishkey=${platformProperty.iosPublishKey}&signature=${getSignature()}")
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection()
+            String payload = APNS.newPayload()
+                    .alertBody(message)
+                    .sound("default")
+                    .build()
 
-        conn.setUseCaches(false)
-        conn.setDoInput(true)
-        conn.setDoOutput(true)
+            service.start()
+            service.push(Utilities.encodeHex(deviceToken.getBytes(StandardCharsets.UTF_8)), new String(Utilities.toUTF8Bytes(payload)))
+            log.info("IOS Push Notification sent Successfully")
+            service.stop()
 
-        conn.setRequestMethod("POST")
-        conn.setRequestProperty("Content-Type","application/json")
+        } catch(Exception exception) {
+            log.error("IOS Push Notification failed due: ${exception.message}")
+        }
 
-        sendAlert(conn, json)
-        log.info("IOS Alert Response: " + conn.getResponseCode() + "   :   " + conn.getResponseMessage())
-        conn.disconnect()
-
-    }
-
-    String getSignature() {
-        new String(DigestUtils.sha(platformProperty.iosSecretKey))
     }
 
 }

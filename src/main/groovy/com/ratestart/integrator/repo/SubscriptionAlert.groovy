@@ -20,6 +20,9 @@ class SubscriptionAlert implements Serializable {
     @Column(name = "device_token")
     String deviceToken
 
+    @Column(name = "device_type")
+    String deviceType
+
     @Column(name = "Alert_idAlert_FK")
     Long idAlert
 
