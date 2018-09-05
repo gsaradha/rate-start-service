@@ -1,8 +1,11 @@
 package com.ratestart.integrator.services
 
-import com.notnoop.apns.APNS
-import com.notnoop.apns.ApnsService
-import com.notnoop.apns.internal.Utilities
+import org.apache.log4j.BasicConfigurator
+
+import javapns.*
+import javapns.notification.PushNotificationPayload
+import javapns.notification.PushedNotification
+import javapns.notification.ResponsePacket
 import com.ratestart.integrator.domain.LenderType
 import com.ratestart.integrator.model.PlatformProperty
 import com.ratestart.integrator.repo.SubscriptionAlert
@@ -11,8 +14,6 @@ import groovy.util.logging.Slf4j
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
-import java.nio.charset.StandardCharsets
 
 @Slf4j
 @Service
@@ -39,14 +40,16 @@ class NotificationService {
         subscriptionAlertList.forEach { it ->
             if (it.deviceType.equalsIgnoreCase("andriod")) {
                 sendAndroidNotification(title, message, it.deviceToken)
+
             } else if (it.deviceType.equalsIgnoreCase("ios")) {
                 sendIosNotification(message, it.deviceToken)
+                //Sample Device Token - a7bd83863bf27b9a00d9d35ab82bd65f4cb01df2a112694a56750d90e4f7ab79
             }
         }
 
     }
 
-    static JSONObject buildJsonMessage(String title, String message, String deviceToken) {
+   static JSONObject buildJsonMessage(String title, String message, String deviceToken) {
         JSONObject json = new JSONObject()
 
         JSONObject data = new JSONObject()
@@ -95,27 +98,53 @@ class NotificationService {
 
     void sendIosNotification(String message, String deviceToken) {
         log.info("IOS Notification APNS -> " + message)
+        log.info("IOS Notification token -> " + deviceToken)
+
+        BasicConfigurator.configure()
+
         try {
-            ApnsService service =
-                    APNS.newService()
-                            .withCert("/Users/saradhabalakrishnan/Desktop/PushNotification/iphone_dev.p12", platformProperty.iosCertPassword)
-                            .withSandboxDestination()
-                            .build()
 
-            String payload = APNS.newPayload()
-                    .alertBody(message)
-                    .sound("default")
-                    .build()
+            InputStream inStream = new FileInputStream("/Users/saradhabalakrishnan/Desktop/PushNotification/Certificates_RS.p12")
 
-            service.start()
-            service.push(Utilities.encodeHex(deviceToken.getBytes(StandardCharsets.UTF_8)), new String(Utilities.toUTF8Bytes(payload)))
-            log.info("IOS Push Notification sent Successfully")
-            service.stop()
+            PushNotificationPayload payload = PushNotificationPayload.complex()
+            payload.addAlert(message)
+            payload.addBadge(1)
+            payload.addSound("default")
+            payload.addCustomDictionary("id", "1")
+            log.info(payload.toString())
 
-        } catch(Exception exception) {
-            log.error("IOS Push Notification failed due: ${exception.message}")
+            List <PushedNotification> pushedNotifications = Push.payload(payload, inStream, "ratestart", false, [deviceToken]);
+
+            for (PushedNotification pushedNotification: pushedNotifications) {
+
+                if (pushedNotification.isSuccessful()) {
+                    /* APPLE ACCEPTED THE NOTIFICATION AND SHOULD DELIVER IT */
+                    log.info("PUSH NOTIFICATION SENT SUCCESSFULLY TO: ${pushedNotification.getDevice().getToken()}")
+                    /* STILL NEED TO QUERY THE FEEDBACK SERVICE REGULARLY */
+
+                } else {
+                    String invalidToken = pushedNotification.getDevice().getToken()
+                    /* ADD CODE HERE TO REMOVE invalidToken FROM YOUR DATABASE */
+                    /* FIND OUT MORE ABOUT WHAT THE PROBLEM WAS */
+
+                    Exception exception = pushedNotification.getException()
+                    exception.printStackTrace()
+                    /* IF THE PROBLEM WAS AN ERROR-RESPONSE PACKET RETURNED BY APPLE, GET IT */
+
+                    ResponsePacket responsePacket = pushedNotification.getResponse()
+                    if (responsePacket != null) {
+                        log.info(responsePacket.getMessage())
+                    }
+                }
+            }
+
+            inStream.close()
+
+        } catch (Exception iosException) {
+            log.error("********** IOS Push Notification Exception -> ${iosException.getMessage()}")
         }
-
     }
 
 }
+
+
