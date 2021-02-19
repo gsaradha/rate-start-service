@@ -95,8 +95,28 @@ class NotificationService {
         conn.disconnect()
 
     }
+    void sendIosNotification(String message, String deviceToken){
+        JSONObject json = buildJsonMessage('ratestart', message, deviceToken)
+        log.info("IOS Notification JSON -> " + json.toString())
 
-    void sendIosNotification(String message, String deviceToken) {
+        URL url = new URL(platformProperty.serverUrl)
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection()
+
+        conn.setUseCaches(false)
+        conn.setDoInput(true)
+        conn.setDoOutput(true)
+
+        conn.setRequestMethod("POST")
+        conn.setRequestProperty("Authorization","key="+'AAAAin_VLCw:APA91bHAdXMHsQO6xbS36Ki3T6Y7inTUeNyZNqA11CKipQ02c7PEfg-8Vv2ndaDXaPZW4QvRTEDBT28HWXtlkLlV_oFYOdFr7_J3hXwRv3AxoqN04TpQ18fg5I7jAVVSzboTegywQi94')
+        conn.setRequestProperty("Content-Type","application/json")
+
+        sendAlert(conn, json)
+        log.info("Android Alert Response: " + conn.getResponseCode() + "   :   " + conn.getResponseMessage())
+        conn.disconnect()
+    }
+}
+
+    /*void sendIosNotification(String message, String deviceToken) {
         log.info("IOS Notification APNS -> " + message)
         log.info("IOS Notification token -> " + deviceToken)
 
@@ -104,7 +124,7 @@ class NotificationService {
 
         try {
 
-            InputStream inStream = new FileInputStream("/Users/saradhabalakrishnan/Desktop/PushNotification/Certificates_RS.p12")
+            InputStream inStream = new FileInputStream("/Users/saradhabalakrishnan/Desktop/PushNotification/ratestart-dev.p12")
 
             PushNotificationPayload payload = PushNotificationPayload.complex()
             payload.addAlert(message)
@@ -119,19 +139,19 @@ class NotificationService {
 
                 if (pushedNotification.isSuccessful()) {
                     /* APPLE ACCEPTED THE NOTIFICATION AND SHOULD DELIVER IT */
-                    log.info("PUSH NOTIFICATION SENT SUCCESSFULLY TO: ${pushedNotification.getDevice().getToken()}")
+   /*                 log.info("PUSH NOTIFICATION SENT SUCCESSFULLY TO: ${pushedNotification.getDevice().getToken()}")
                     /* STILL NEED TO QUERY THE FEEDBACK SERVICE REGULARLY */
 
-                } else {
+    /*            } else {
                     String invalidToken = pushedNotification.getDevice().getToken()
                     /* ADD CODE HERE TO REMOVE invalidToken FROM YOUR DATABASE */
                     /* FIND OUT MORE ABOUT WHAT THE PROBLEM WAS */
 
-                    Exception exception = pushedNotification.getException()
+    /*                Exception exception = pushedNotification.getException()
                     exception.printStackTrace()
                     /* IF THE PROBLEM WAS AN ERROR-RESPONSE PACKET RETURNED BY APPLE, GET IT */
 
-                    ResponsePacket responsePacket = pushedNotification.getResponse()
+    /*                ResponsePacket responsePacket = pushedNotification.getResponse()
                     if (responsePacket != null) {
                         log.info(responsePacket.getMessage())
                     }
@@ -145,6 +165,6 @@ class NotificationService {
         }
     }
 
-}
+}*/
 
 
